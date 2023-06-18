@@ -18,6 +18,10 @@ text-align: center;
 label{margin:2px; padding: 7px; display: inline-block; background:#ded;border:2px solid green; cursor: pointer;}
   .palet {display:flex;}
   .palet .color {width:24px; height:24px;background: white;border:1px solid blue;}
+#pascal{margin:10px;padding-left: 33px;border: 1px solid blue;width:fit-content;} 
+#waw{display: block; height:32px; background: green;}
+#waw:has(#curve:checked){background: red;} 
+#curve{display:none;}
   </style>  
 </head>
 <body text="black" bgcolor="white">
@@ -27,7 +31,13 @@ label{margin:2px; padding: 7px; display: inline-block; background:#ded;border:2p
 <svg id="svg" width="900" height="415" viewBox="0 0 900 415" fill="none"
 onmousedown="
 if(curve.checked){
-	const o={x:event.clientX-i.offsetLeft,y:event.clientY-i.offsetTop+window.pageYOffset};	
+	const o={// вершина ломаной добавление/выделение
+		x:stepx*(Math.round((event.clientX-i.offsetLeft
+		+window.pageXOffset)/stepx)),
+		y:stepy*(Math.round((event.clientY-i.offsetTop
+		+window.pageYOffset)/stepy))
+	};	
+
 	// попал в заповедную зону
 	let g=-1;// нарушитель
 	for (let i=0;i<a.length;i++)if(((a[i].x-o.x)*(a[i].x-o.x)+(a[i].y-o.y)*(a[i].y-o.y))<160)g=i;
@@ -45,37 +55,26 @@ if(curve.checked){
 		}
 }
 else{
-dawn['down']=true;
-//dawn.x=event.clientX-i.offsetLeft; 
-//dawn.y=event.clientY-i.offsetTop;
-dawn.x=stepx*(Math.floor((event.clientX-i.offsetLeft)/stepx)); 
-//dawn.x=(Math.trunc(event.clientX-i.offsetLeft)/stepx)*stepx; 
-//dawn.x=(Math.floor(event.clientX-i.offsetLeft)/stepx)*stepx;
-dawn.y=stepy*(Math.floor((event.clientY-i.offsetTop)/stepy));
-
-//console.log(stepx+' '+dawn.x+' '+(event.clientX-i.offsetLeft)+' '
-//+(stepx*Math.round((event.clientX-i.offsetLeft)/stepx)));
-eff.setAttribute('x',dawn.x);
-eff.setAttribute('y',dawn.y);
-eff.classList.remove('hide');
+	dawn['down']=true;
+	dawn.x=stepx*(Math.floor((event.clientX-i.offsetLeft)/stepx)); 
+	dawn.y=stepy*(Math.floor((event.clientY-i.offsetTop)/stepy));
+	eff.setAttribute('x',dawn.x);
+	eff.setAttribute('y',dawn.y);
+	eff.classList.remove('hide');
 }
 "
 
 onmousemove="
 if(curve.checked){}
 else{
-//console.log(dawn+' '+n);
-//console.log(au);
-if(dawn['down']){
-let x=stepx*(Math.floor((dawn.x-event.clientX+i.offsetLeft)/stepx));
-let y=stepy*(Math.floor((dawn.y-event.clientY+i.offsetTop)/stepy));
-
-
-eff.setAttribute('width',Math.abs(x));
-eff.setAttribute('height',Math.abs(y));
-dawn.w=Math.abs(x);
-dawn.h=Math.abs(y);
-}
+	if(dawn['down']){
+	let x=stepx*(Math.floor((dawn.x-event.clientX+i.offsetLeft)/stepx));
+	let y=stepy*(Math.floor((dawn.y-event.clientY+i.offsetTop)/stepy));
+	eff.setAttribute('width',Math.abs(x));
+	eff.setAttribute('height',Math.abs(y));
+	dawn.w=Math.abs(x);
+	dawn.h=Math.abs(y);
+	}
 }
 "
 onmouseup="
@@ -85,16 +84,17 @@ else{
 	eff.classList.add('hide');
 	let x=stepx*(Math.floor((dawn.x-event.clientX+i.offsetLeft)/stepx));
 	let y=stepy*(Math.floor((dawn.y-event.clientY+i.offsetTop)/stepy));
-//dawn.y=stepy*(Math.floor((event.clientY-i.offsetTop)/stepy));	
 
-	console.log(['up',dawn.x,dawn.y,Math.abs(x),Math.abs(y)].join(','));
+	//console.log(['up',dawn.x,dawn.y,Math.abs(x),Math.abs(y)].join(','));
 
 	if(document.getElementById('ute'))ute.remove();
-	svg.innerHTML+=`<rect id='ute' x='`
-	+dawn.x+`' y='`
-	+dawn.y+`' width='`
-	+dawn.w+`' height='`
-	+dawn.h+`' stroke='red' stroke-width='1' fill='none'></rect>`;
+	svg.innerHTML+=
+		`<rect id='ute' x='`
+		+dawn.x+`' y='`
+		+dawn.y+`' width='`
+		+dawn.w+`' height='`
+		+dawn.h+`' stroke='red' `
+		+`stroke-width='1' fill='none'></rect>`;
 	move=0;
 }
 "
@@ -117,6 +117,7 @@ textPath {font-family: sans-serif; font-size: 16px;}
 </div><br>
 <label onclick="but0()">rest</label>
 <label onclick="but1()">round</label>
+<label onclick="but5()">romb</label>
 <label onclick="but2()">line /</label>
 <label onclick="but3()">line \</label>
 <label onclick="but4()">clip</label>
@@ -144,9 +145,16 @@ textPath {font-family: sans-serif; font-size: 16px;}
 	<div class="color"></div>	
 	<div class="color"></div>	
 </article>
-<h1 id="h1"></h1><h2 id="h2"></h2><h3 id="h3"></h3>
+
+<label id="waw">
 <input id="curve" type="checkbox"  /><!--  checked   -->
-<script>
+</label>
+<div id="pascal"></div>
+<script>/*
+<h1 id="h1"></h1>
+<h2 id="h2"></h2>
+<h3 id="h3"></h3>
+*/
 let a=[]; // коорды в пикселях
 let b=[]; // коорды в процентах
 let bz=[]; // сглаженность точки
@@ -155,7 +163,7 @@ let s;
 let datax, datay;
 let stepx=1,stepy=1;
 
-let au=[];
+let au=[];// dawno тека
 let bok=0;
 const cc=['white','red','black','green','yellow','lime',
 'violet','purple','navy','aqua','blue','gold',
@@ -163,11 +171,11 @@ const cc=['white','red','black','green','yellow','lime',
 let move=null;
 let n=0;
 let ink=cc[4];
-let dawn={x:0,y:0,w:1,h:1};
-//натянуть dawn на b
+let dawn={x:0,y:0,w:1,h:1};// знакоместо
 
 
-const adi=()=>{// в процентах
+
+const adi=()=>{// пиксели в проценты
 	let xma,xmi,yma,ymi,dx,dy;
 	let kx,ky;
 	if (!a.length) return [];
@@ -189,21 +197,89 @@ const adi=()=>{// в процентах
 		}});
 }
 
-const vw=()=>{ // рендеринг
+const vw=()=>{ // рендеринг вершин ломаной
     b=adi();
-	h3.innerText=b.map(i=>i.x+' '+i.y).join(',');
-	//console.log(b);
+	//h3.innerText=b.map(i=>i.x+' '+i.y).join(',');
 	s=a.map((i,j)=>
 	'<circle r="3" cx="'+(i.x)+
 	'" cy="'+(i.y)+
-	'" fill="'+((bz[j])?'violet':'red')+'"/>'	
+	'" fill="'+((bz[j])?'red':'fuchsia')+'"/>'	
 	).join('\n');
 	gogo.innerHTML=	
 	'<rect x="'+(a[c].x-5)+'" y="'+(a[c].y-5)+'" width="10" height="10" fill="none" stroke="red"/>'
-	+s;
-	//fly();
+	+s;	
 }
 
+//** увел  с https://prog-time.ru/kak-uznat-ton-tsveta-po-kodu-na-javascript/
+function colorToRGBA(color) {// название цвета в rgb
+    var cvs, ctx;
+    cvs = document.createElement('canvas');
+    cvs.height = 1;
+    cvs.width = 1;
+    ctx = cvs.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1, 1);
+    return ctx.getImageData(0, 0, 1, 1).data;
+}
+
+const brushcolor=(x)=>{
+	let c=colorToRGBA(x.getAttribute('fill'));
+	return `setbrushcolor(rgb(${c[0]},${c[1]},${c[2]}));`;
+}
+
+const pas=()=>{// pascalabc.net код 
+	pascal.innerHTML=
+'uses graphABC;<br>'+	
+'begin<br>'+
+'	SetPenWidth(3);<br>'+
+'	SetPenColor(clBlack);<br>'+
+	au.map((x,i)=>{
+		delete x['down'];
+		let s='';
+		let d;
+		d=document.getElementById('p'+i);
+		if(d){// полигон
+			bc=brushcolor(d);
+			s=d.getAttribute('d').replace(/[^\d-,]/g,'').split(',');
+			let a=[];
+			xx=0,yy=0;
+			for(let j=0; j<s.length; j+=2){
+				xx+=+s[j];
+				yy+=+s[j+1];
+				a.push('('+xx+','+yy+')');
+			}	
+			//let e=bc+'Polygon('+a.join(',')+');<br>';
+			let e=bc+'Polyline('+a.join(',')+','+a[0]+');<br>';
+			return e;
+		}
+		d=document.getElementById('e'+i);//
+		if(d){//эллипс
+			bc=brushcolor(d);
+			let rx=+d.getAttribute('rx');
+			let cx=+d.getAttribute('cx');
+			let ry=+d.getAttribute('ry');
+			let cy=+d.getAttribute('cy');					
+			let e=bc+'Ellipse('+[(cx-rx),(cy-ry),(cx+rx),(cy+ry)].join(',')+');<br>';
+			return e;
+		}
+		d=document.getElementById('r'+i);//
+		if(d){//прямоугольник
+			bc=brushcolor(d);
+			let rx=+d.getAttribute('x');
+			let ry=+d.getAttribute('y');
+			let cx=+d.getAttribute('width');
+			let cy=+d.getAttribute('height');					
+			let e=bc+'Rectangle('+[(rx),(ry),(cx+rx),(cy+ry)].join(',')+');<br>';
+			return e;
+		}		
+		let m=[];
+		for (const p in x)  m.push(`${p}: ${x[p]}`);	 
+		return m.join('')+s+'<br>';})// end of map au
+	.join('')
++'end.<br>'	;
+}
+
+//***************
 jp=[...document.querySelectorAll('.color')];
 jp.forEach((x,i)=>{
 	x.style.background=cc[i]; 
@@ -212,217 +288,231 @@ jp.forEach((x,i)=>{
 	});
 });
 
-//jp[0].style.backGround='red';
-//alert(jp[0].setAttribute('back'));
 
-const but0=()=>{//alert(dawn.h);
-n++;
-if(document.getElementById('ute'))ute.remove();// id='mov'
-//svg.innerHTML+=`<rect id='j`+n+`' x='`
-svg.innerHTML+=`<rect class="fg"  id='r`
-+n+`' x='`
-+dawn.x+`' y='`
-+dawn.y+`' width='`
-+dawn.w+`' height='`
-+dawn.h+`' fill='`
-+ink+`' stroke='black' stroke-width='1' `
-+` onmouseup="event.stopPropagation();" `
-+` onmousemove="event.stopPropagation();" `
-+` onmousedown="event.stopPropagation(); `
-+` if(document.getElementById('ute'))ute.remove(); `
-//alert(`+n+`);
-+` den0(this); `
-+`move=`
-+n+`;bok=0;"></rect>`;
-au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
-bok=0;
-console.log(au);
-}//onclick='move=this.id'
+//*******************************
+const but0=()=>{// прямоугольник
+	n++;
+	if(document.getElementById('ute'))ute.remove();// id='mov'
+	svg.innerHTML+=
+		`<rect class="fg"  id='r`
+		+n+`' x='`
+		+dawn.x+`' y='`
+		+dawn.y+`' width='`
+		+dawn.w+`' height='`
+		+dawn.h+`' fill='`
+		+ink+`' stroke='black' stroke-width='1' `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="event.stopPropagation(); `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		//alert(`+n+`);
+		+` den0(this); `
+		+`move=`
+		+n+`;bok=0;"></rect>`;
+	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
+	bok=0;
+	console.log(au);
+	pas();
+	}//
 
 const but1=()=>{
-n++;
-if(document.getElementById('ute'))ute.remove();
-svg.innerHTML+=
-`<ellipse class="fg" id='e`+n+`' rx="`
-+(dawn.w/2)+`" ry="`
-+(dawn.h/2)+`" cx="`
-+(dawn.x+dawn.w/2)+`" cy="`
-+(dawn.y+dawn.h/2)+`" fill="`
-+ink+`"  stroke='black' stroke-width='1' `
+	n++;
+	if(document.getElementById('ute'))ute.remove();
+	svg.innerHTML+=
+		`<ellipse class="fg" id='e`+n+`' rx="`
+		+(dawn.w/2)+`" ry="`
+		+(dawn.h/2)+`" cx="`
+		+(dawn.x+dawn.w/2)+`" cy="`
+		+(dawn.y+dawn.h/2)+`" fill="`
+		+ink+`"  stroke='black' stroke-width='1' `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="event.stopPropagation(); `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		+` den1(this); `
+		+`move=`
+		+n+`;bok=0;"></ellipse>`;
+	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
+	bok=0;
+	pas();
+	}
 
-+` onmouseup="event.stopPropagation();" `
-+` onmousemove="event.stopPropagation();" `
-+` onmousedown="event.stopPropagation(); `
-+` if(document.getElementById('ute'))ute.remove(); `
-+` den1(this); `
-+`move=`
-+n+`;bok=0;"></ellipse>`;
-au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
-bok=0;
-}
-
-const but2=()=>{
-n++;
-if(document.getElementById('ute'))ute.remove();
-svg.innerHTML+=
-`<line  class="fg" id='ll`+n+`'  x1="`
-+(dawn.x+dawn.w)+`" y1="`
-+dawn.y+`" x2="`
-+dawn.x+`" y2="`
-+(dawn.y+dawn.h)+`" stroke="`
-+ink+`" stroke-linecap="square" stroke-width="5" `
-
-+` onmouseup="event.stopPropagation();" `
-+` onmousemove="event.stopPropagation();" `
-+` onmousedown="event.stopPropagation(); `
-+` if(document.getElementById('ute'))ute.remove(); `
-+` den2(this); `
-+`move=`
-+n+`;bok=0;"></line>`;
-au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
-bok=0;
-}
+const but2=()=>{// линия
+	n++;
+	if(document.getElementById('ute'))ute.remove();
+	svg.innerHTML+=
+		`<line  class="fg" id='ll`+n+`'  x1="`
+		+(dawn.x+dawn.w)+`" y1="`
+		+dawn.y+`" x2="`
+		+dawn.x+`" y2="`
+		+(dawn.y+dawn.h)+`" stroke="`
+		+ink+`" stroke-linecap="square" stroke-width="5" `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="event.stopPropagation(); `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		+` den2(this); `
+		+`move=`
+		+n+`;bok=0;"></line>`;
+	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
+	bok=0;
+	}
 
 const but3=()=>{
-n++;
-if(document.getElementById('ute'))ute.remove();
-svg.innerHTML+=
-`<line  class="fg" id='ll`+n+`'  x1="`
-+dawn.x+`" y1="`
-+dawn.y+`" x2="`
-+(dawn.x+dawn.w)+`" y2="`
-+(dawn.y+dawn.h)+`" stroke="`
-+ink+`" stroke-linecap="square" stroke-width="5" `
+	n++;
+	if(document.getElementById('ute'))ute.remove();
+	svg.innerHTML+=
+		`<line  class="fg" id='ll`+n+`'  x1="`
+		+dawn.x+`" y1="`
+		+dawn.y+`" x2="`
+		+(dawn.x+dawn.w)+`" y2="`
+		+(dawn.y+dawn.h)+`" stroke="`
+		+ink+`" stroke-linecap="square" stroke-width="5" `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="event.stopPropagation(); `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		+` den3(this); `
+		+`move=`
+		+n+`;bok=0;"></line>`;
+	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
+	bok=0;
+	pas();
+	}
 
-+` onmouseup="event.stopPropagation();" `
-+` onmousemove="event.stopPropagation();" `
-+` onmousedown="event.stopPropagation(); `
-+` if(document.getElementById('ute'))ute.remove(); `
-+` den3(this); `
-+`move=`
-+n+`;bok=0;"></line>`;
-au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
-bok=0;
+const but4=()=>{// полигон
+	n++;
+	let px,py;
+	let a10=b.map(i=>{return {x:(dawn.x+i.x*dawn.w/100),y:(dawn.y+i.y*dawn.h/100)}});
+	let a11=a10.map((j,k)=>{let o={x:(j.x-px),y:(j.y-py)};px=j.x;py=j.y;return (k===0)?j:o});
+	let a12=a11.map(v=>(v.x|0)+','+(v.y|0)).join(',');
+	//console.log(a12);
+	if(document.getElementById('ute'))ute.remove();
+	svg.innerHTML+=
+		`<path class="fg" id='p`+n+`' d="m`
+		+a12
+		+`z" fill="`
+		+ink+`"  stroke='black' stroke-width='1' `
+		+` data-x='`
+		+(a11[0].x|0)
+		+`' data-y='`
+		+(a11[0].y|0)+`' `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="event.stopPropagation(); `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		+` den4(this,`+n+`); `
+		+`move=`
+		+n+`; bok=0;"></ellipse>`;
+	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
+	bok=0;
+	pas();
+	}
+
+
+const but5=()=>{// ромб
+	n++;
+	let px,py;
+	b=[{x:0,y:50},{x:50,y:0},{x:100,y:50},{x:50,y:100}];
+	let a10=b.map(i=>{
+		return {
+			x:(dawn.x+i.x*dawn.w/100),
+			y:(dawn.y+i.y*dawn.h/100)
+		}});
+	let a11=a10.map((j,k)=>{
+		let o={x:(j.x-px),y:(j.y-py)};
+		px=j.x;
+		py=j.y;
+		return (k===0)?j:o}
+		);
+	let a12=a11.map(v=>(v.x|0)+','+(v.y|0)).join(',');
+
+	if(document.getElementById('ute'))ute.remove();
+	svg.innerHTML+=
+		`<path class="fg" id='p`+n+`' d="m`
+		+a12
+		+`z" fill="`
+		+ink+`"  stroke='black' stroke-width='1' `
+		+` data-x='`
+		+(a11[0].x|0)
+		+`' data-y='`
+		+(a11[0].y|0)+`' `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="event.stopPropagation(); `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		+` den4(this,`+n+`); `
+		+`move=`
+		+n+`;bok=0;"></ellipse>`;
+	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
+	bok=0;
+	pas();
+	}
+
+const grid=()=>{// создает сетку
+	grid1.innerHTML='';
+	let xx=0;
+	while(xx<900){
+	grid1.innerHTML+=
+	'<path d="M'+xx+' 0 V420" stroke="gray" stroke-width="1"></path>\r\n';
+	xx+=dawn.w;}
+	let yy=0;
+	while(yy<420){
+	grid1.innerHTML+=
+	'<path d="M0 '+yy+' H900" stroke="gray" stroke-width="1"></path>\r\n';
+	yy+=dawn.h;}
+	stepx=dawn.w; stepy=dawn.h;
 }
 
-const but4=()=>{
-n++;
-let p,px,py;
-console.log(b);
-let a10=b.map(i=>{return {x:(dawn.x+i.x*dawn.w/100),y:(dawn.y+i.y*dawn.h/100)}});
-console.log(a10);
-let a11=a10.map((j,k)=>{let o={x:(j.x-px),y:(j.y-py)};px=j.x;py=j.y;return (k===0)?j:o});
-console.log(a11);
-let a12=a11.map(v=>(v.x|0)+','+(v.y|0)).join(',');
-console.log(a12);
-
-if(document.getElementById('ute'))ute.remove();
-svg.innerHTML+=
-`<path class="fg" id='p`+n+`' d="m`
-//+b.map(i=>(dawn.x+i.x*dawn.w/100)+','+(dawn.y+i.y*dawn.h/100))
-+a12
-//.map((j,k)=>{p=j; return (k===0)?j:({x:(j.x-p.x),y:(j.y-p.y)})})//
-//.map(v=>(v.x+','+v.y))
-//.join(', ')
-
-
-/*+(dawn.w/2)+`" ry="`
-+(dawn.h/2)+`" cx="`
-+(dawn.x+dawn.w/2)+`" cy="`
-+(dawn.y+dawn.h/2)*/
-+`z" fill="`
-+ink+`"  stroke='black' stroke-width='1' `
-+` data-x='`
-+(a11[0].x|0)
-+`' data-y='`
-+(a11[0].y|0)+`' `
-
-+` onmouseup="event.stopPropagation();" `
-+` onmousemove="event.stopPropagation();" `
-+` onmousedown="event.stopPropagation(); `
-+` if(document.getElementById('ute'))ute.remove(); `
-+` den4(this,`+n+`); `
-+`move=`
-+n+`;bok=0;"></ellipse>`;
-au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
-bok=0;
-//**********
-//a=[];c=-1;gogo.innerHTML='';// стирает путь
-}
-
-
-const grid=()=>{
-//alert(dawn.w+' '+dawn.h);
-grid1.innerHTML='';
-let xx=0;
-while(xx<900){
-grid1.innerHTML+=
-'<path d="M'+xx+' 0 V420" stroke="gray" stroke-width="1"></path>\r\n';
-xx+=dawn.w;}
-let yy=0;
-while(yy<420){
-grid1.innerHTML+=
-'<path d="M0 '+yy+' H900" stroke="gray" stroke-width="1"></path>\r\n';
-yy+=dawn.h;}
-stepx=dawn.w; stepy=dawn.h;
-}
-
-
-const den0=(n)=>{
-//alert(n.getAttribute('x'));
+//***********************************
+const den0=(n)=>{ // квадрат
 dawn.x=n.getAttribute('x');
 dawn.y=n.getAttribute('y');
 dawn.w=n.getAttribute('width');
 dawn.h=n.getAttribute('height');
 }
-const den1=(n)=>{
-//alert(n.getAttribute('x'));
+const den1=(n)=>{ // круг
 dawn.x=n.getAttribute('cx')-n.getAttribute('rx');
 dawn.y=n.getAttribute('cy')-n.getAttribute('ry');
 dawn.w=2*n.getAttribute('rx');
 dawn.h=2*n.getAttribute('ry');
 }
-const den2=(n)=>{
-//alert(n.getAttribute('x'));
+const den2=(n)=>{// линия
 dawn.x=n.getAttribute('x1');
 dawn.y=n.getAttribute('y1');
 dawn.w=n.getAttribute('x2')+n.getAttribute('x1');
 dawn.h=n.getAttribute('y2')+n.getAttribute('y1');
 }
-const den3=(n)=>{
-//alert(n.getAttribute('x'));
+const den3=(n)=>{// линия
 dawn.x=n.getAttribute('x1');
 dawn.y=n.getAttribute('y1');
 dawn.w=n.getAttribute('x2')+n.getAttribute('x1');
 dawn.h=n.getAttribute('y2')+n.getAttribute('y1');
 }
-const den4=(n)=>{
-//alert(n.getAttribute('x'));
-//=au[n];//au[n]
+const den4=(n)=>{// полигон
 dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 }
  //********************* выбранная точка перемещается курсорными клавишами
  document.addEventListener('keydown', (e) => {// ←↑↓→
-	// сканирование клавы по обобщенной схеме
-	//alert(move);
+	// сканирование клавы 
 	let hx,hy;
-	h1.innerText=move;
+	//h1.innerText=move;
 	if(move)
 		if(document.getElementById('ute'))
 			ute.remove();
-	//alert('!');
 	switch(e.key) {//
 		case 'ArrowDown': //↓
 			if(curve.checked){
-			if(c+1){a[c].y+=stepy;vw();}
-			
+				if(c+1){a[c].y+=stepy; vw();}// точки ломаной			
 			}
 			else{
 			hx=0;hy=stepy;
-			switch (bok){
-				case 2: dawn.h+=stepy; break;//dawn.y++;
-				case 4: dawn.y+=stepy; dawn.h-=stepy; break;
-				case 0: dawn.y+=stepy; break;
+			switch (bok){// подвижная грань
+				case 2: dawn.h=+dawn.h+stepy; break;//низ
+				case 4: dawn.y=+dawn.y+stepy; 
+						dawn.h=+dawn.h-stepy; 
+						break;//верх
+				case 0: dawn.y=+dawn.y+stepy; break;//все
 				}			
 				}
 				e.preventDefault();
@@ -431,14 +521,14 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 		
 		case 'ArrowUp': //↑
 			if(curve.checked){
-			if(c+1){a[c].y-=stepy;vw();}
+				if(c+1){a[c].y-=stepy; vw();}
 			}
 			else{
 			hx=0;hy=-stepy;
 			switch (bok){
-				case 2: dawn.h-=stepy; break;
-				case 4: dawn.y-=stepy; dawn.h+=stepy; break;
-				case 0: dawn.y-=stepy; break;
+				case 2: dawn.h=+dawn.h-stepy; break;//низ
+				case 4: dawn.y=+dawn.y-stepy; dawn.h=+dawn.h+stepy; break;//верх
+				case 0: dawn.y=+dawn.y-stepy; break;//все
 				}					
 				}
 				e.preventDefault();
@@ -446,14 +536,14 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 						  
 		case 'ArrowRight': //→
 			if(curve.checked){
-			if(c+1){a[c].x+=stepx;vw();}
+				if(c+1){a[c].x+=stepx; vw();}
 			}
 			else{
 			hx=stepx;hy=0;
 			switch (bok){
-				case 1: dawn.w+=stepx; break;
-				case 3: dawn.x+=stepx; dawn.w-stepx; break;
-				case 0: dawn.x+=stepx; break;
+				case 1: dawn.w=+dawn.w+stepx; break;//правая
+				case 3: dawn.x=+dawn.x+stepx; dawn.w=+dawn.w-stepx; break;//левая
+				case 0: dawn.x=+dawn.x+stepx; break;//все
 				}
 				}
 				e.preventDefault();
@@ -461,76 +551,83 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 					
 		case 'ArrowLeft': //←
 			if(curve.checked){
-			if(c+1){a[c].x-=stepx;vw();}
+				if(c+1){a[c].x-=stepx;	vw();}
 			}
 			else{
 			hx=-stepx;hy=0;
 			switch (bok){
-				case 1: dawn.w-=stepx; break;
-				case 3: dawn.x-=stepx; dawn.w+=stepx; break;
-				case 0: dawn.x-=stepx; break;
+				case 1: dawn.w=+dawn.w-stepx; break;
+				case 3: dawn.x=+dawn.x-stepx; dawn.w=+dawn.w+stepx; break;
+				case 0: dawn.x=+dawn.x-stepx; break;
 				}
 				}
 				e.preventDefault();
 				break;
 		case ' ': but1();break;//	alert('space')			
 
-		case '0': if(!curve.checked){bok++;bok=bok%5;}// numpad0	, 0	
+		case '0': if(!curve.checked){bok++;bok=bok%5;
+			/*switch (bok){// подвижная грань
+				case 1: hx=stepx; hy=0; break;
+				case 2: hx=0; hy=stepy; break;//низ
+				case 3: hx=-stepx; hy=0; break;
+				case 4: hx=0; hy=-stepy; break;//верх
+				}*/
+			switch (bok){// подвижная грань
+				case 0: hx=0; hy=0; break;
+				case 1: hx=0; hy=0; break;
+				case 2: hx=0; hy=0; break;//низ
+				case 3: hx=0; hy=0; break;
+				case 4: hx=0; hy=0; break;//верх
+				}				
+		}// numpad0	, 0	
 		default: break;
 	}// switch
-	h2.innerText=bok;
-//alert(move);
-//let d=document.querySelectorAll('fg');
-
-if(document.getElementById('ute')){	
-	ute.setAttribute('x',dawn.x);
-	ute.setAttribute('y',dawn.y);	
-	ute.setAttribute('width',dawn.w);
-	ute.setAttribute('height',dawn.h);
-	return; 
-}	
-	//alert('#j'+move);
-//if(document.getElementById('ute'))
-let b=document.querySelector('#r'+move);
-if (b)
-{	
-//alert(b.id);
-b.setAttribute('x',dawn.x);
-b.setAttribute('y',dawn.y);	
-b.setAttribute('width',dawn.w);
-b.setAttribute('height',dawn.h);
-return;
-}
-b=document.querySelector('#e'+move);
-if (b)
-{	
-//alert(b.id);
-b.setAttribute('cx',dawn.x+dawn.w/2);
-b.setAttribute('cy',dawn.y+dawn.h/2);	
-b.setAttribute('rx',dawn.w/2);
-b.setAttribute('ry',dawn.h/2);
-return;
-}
-b=document.querySelector('#p'+move);
-if (b)
-{	
-//alert(b.id);
-			datax=+b.dataset.x+hx;
-			datay=+b.dataset.y+hy;
-			b.dataset.x=datax;
-			b.dataset.y=datay;			
-//b.setAttribute('cx',dawn.x+dawn.w/2);
-//b.setAttribute('cy',dawn.y+dawn.h/2);	
-//b.setAttribute('rx',dawn.w/2);
-//b.setAttribute('ry',dawn.h/2);
-let s=b.getAttribute('d').replace(/(m\d+,\d+)(.+)/,'$2');//;//
-//alert(s);
-b.setAttribute('d','m'+datax+','+datay+s);
-//console.log('m'+datax+','+datay+s);
-return;
-}
+	//h2.innerText=bok; // перемещаемая грань знакоместа
 
 
+	if(document.getElementById('ute')){	
+		ute.setAttribute('x',dawn.x);
+		ute.setAttribute('y',dawn.y);	
+		ute.setAttribute('width',dawn.w);
+		ute.setAttribute('height',dawn.h);
+		pas();
+		return; 
+	}	
+
+	let b;// искомый элемент
+	b=document.querySelector('#r'+move);// квадрат
+	if (b)
+		{	
+		b.setAttribute('x',dawn.x);
+		b.setAttribute('y',dawn.y);	
+		b.setAttribute('width',dawn.w);
+		b.setAttribute('height',dawn.h);
+		pas();
+		return;
+		}
+	b=document.querySelector('#e'+move);// круг
+	if (b)
+		{	
+		b.setAttribute('cx',dawn.x+dawn.w/2);
+		b.setAttribute('cy',dawn.y+dawn.h/2);	
+		b.setAttribute('rx',dawn.w/2);
+		b.setAttribute('ry',dawn.h/2);
+		pas();
+		return;
+		}
+	b=document.querySelector('#p'+move);// полигон
+	if (b)
+		{	
+		datax=+b.dataset.x+hx;
+		datay=+b.dataset.y+hy;
+		if(isNaN(datax))alert('nan');
+		b.dataset.x=datax;// иногда масштбирование помещает сюда NaN
+		b.dataset.y=datay;			
+		let s=b.getAttribute('d').replace(/(m\d+,\d+)(.+)/,'$2');
+		b.setAttribute('d','m'+datax+','+datay+s);
+		pas();
+		return;
+		}
 	});
 //**************************
 
