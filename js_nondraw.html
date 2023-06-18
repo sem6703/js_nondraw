@@ -18,7 +18,24 @@ text-align: center;
 label{margin:2px; padding: 7px; display: inline-block; background:#ded;border:2px solid green; cursor: pointer;}
   .palet {display:flex;}
   .palet .color {width:24px; height:24px;background: white;border:1px solid blue;}
-#pascal{margin:10px;padding-left: 33px;border: 1px solid blue;width:fit-content;} 
+#pascal{margin:10px;padding-left: 33px;border: 1px solid blue;width:fit-content;
+position: relative;} 
+.copybara {
+transition: .5s ease-out;
+position:absolute;
+right:0px;
+top: 2px;
+b0ackground-color:yellow;
+/* ******************* */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAATCAIAAAAS8MqlAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEsSURBVDhPnZC9TsMwFIV5RXZ4BF6BjpHYwgQrCxLpEDEQJ6FlohJMaQOoQvyUhZaGspHE8U+55lbErU0j9egosm/O5yN76zsvNrDCTg09Pb/oIdMLbK4Jtp3O5XrSjsE3iqI1ZI2lb5+9x2wuZRzHwIRhSAjRo7qX2iRAUsKiZegiCOxYOoK2KelP2rdjyP2esxCS3e6VBZNSSCG44CDEVLWaCdy6rvtH1thglPWGU5JMvJt3zB2cP+x7d1wIx3GAQa1icCpWMc4Qg4kacg7r2dcMbMEGr9n18CNIxmfLbXsn6e5xf/swgYkF04UYY7xiVVVRCqYlTFYxXb7v123te9V2ZGszDW8AIdVBS1oWpXLejMFvbGt5qm3HejfTiJlqxv4TBuxYozfC8uIHUDp6oFBQcH0AAAAASUVORK5CYII=);
+	background-size: cover;
+	cursor: pointer;
+	width: 27px;
+	height: 30px;
+	margin-left:-27px;
+	margin-bottom:20px;	
+} 
+.copybara:hover {transform: scale(1.1); border: 1px solid blue;}
 #waw{display: block; height:32px; background: green;}
 #waw:has(#curve:checked){background: red;} 
 #curve{display:none;}
@@ -110,6 +127,7 @@ textPath {font-family: sans-serif; font-size: 16px;}
 <g id="grid1"></g>
 
 <ellipse class="x" cx="462.5" cy="302.5" rx="49.5" ry="10" stroke="blue" fill="cyan" opacity="1" stroke-width="1"></ellipse>
+<g id="figs"></g>
 <g id="gogo"></g>
 
 <rect id="eff" class="hide" x="0" y="0" width="90" height="41" stroke="red" fill="none"></rect>
@@ -120,9 +138,12 @@ textPath {font-family: sans-serif; font-size: 16px;}
 <label onclick="but5()">romb</label>
 <label onclick="but2()">line /</label>
 <label onclick="but3()">line \</label>
-<label onclick="but4()">clip</label>
+<label onclick="but4();
+a=[];c=-1;gogo.innerHTML='';
+">clip</label>
 <label onclick="a=[];c=-1;gogo.innerHTML='';// стирает путь">clear path</label>
 <label onclick="grid()">grid</label>
+<label onclick="del()">&times;</label>
 
  <article class="palet">
 	<div class="color"></div>
@@ -147,21 +168,33 @@ textPath {font-family: sans-serif; font-size: 16px;}
 </article>
 
 <label id="waw">
-<input id="curve" type="checkbox"  /><!--  checked   -->
+<input id="curve" type="checkbox" onchange="if(document.getElementById('ute'))ute.remove();" checked /><!--    -->
 </label>
-<div id="pascal"></div>
+<div style=""></div>
+<div id="pascal">
+
+<div class="copybara" 
+onclick="cpy(this.parentElement);">
+</div>
+</div>
+<textarea id="cop" rows="1" cols="90" style="position:absolute; left:-9999px; color: white; background: green;" title="используется для копирования">
+</textarea>
+
+
 <script>/*
-<h1 id="h1"></h1>
+<h1 id="h1"></h1>onchang
 <h2 id="h2"></h2>
 <h3 id="h3"></h3>
 */
 let a=[]; // коорды в пикселях
 let b=[]; // коорды в процентах
+let bf=[]; // коорды в пикселях
 let bz=[]; // сглаженность точки
 let c=-1;  // курсор точек
 let s;
 let datax, datay;
 let stepx=1,stepy=1;
+let gxmi,gymi,gwidth,gheight;
 
 let au=[];// dawno тека
 let bok=0;
@@ -197,8 +230,35 @@ const adi=()=>{// пиксели в проценты
 		}});
 }
 
+const fre=()=>{// пиксели не в проценты
+	let xma,xmi,yma,ymi,dx,dy;
+	let kx,ky;
+	if (!a.length) return [];
+	xma=a[0].x; yma=a[0].y;
+	xmi=a[0].x; ymi=a[0].y;
+	a.forEach(i=>{
+		if(xma<i.x)xma=i.x;
+		if(yma<i.y)yma=i.y;
+		if(xmi>i.x)xmi=i.x;
+		if(ymi>i.y)ymi=i.y;
+		dx=xma-xmi;
+		dy=yma-ymi;
+		//kx=dx/100;
+		//ky=dy/100;	
+		});
+	gxmi=xmi;
+	gymi=ymi;
+	gwidth=dx;
+	gheight=dy;	
+	return a.map(i=>{return {
+		x:i.x-xmi,//Math.trunc())
+		y:i.y-ymi,//Math.trunc())
+		}});
+}
+
 const vw=()=>{ // рендеринг вершин ломаной
     b=adi();
+	bf=fre();
 	//h3.innerText=b.map(i=>i.x+' '+i.y).join(',');
 	s=a.map((i,j)=>
 	'<circle r="3" cx="'+(i.x)+
@@ -277,6 +337,10 @@ const pas=()=>{// pascalabc.net код
 		return m.join('')+s+'<br>';})// end of map au
 	.join('')
 +'end.<br>'	;
+pascal.innerHTML+=
+'<div class="copybara" '
++'onclick="cpy(this.parentElement);">'
++'</div>';
 }
 
 //***************
@@ -293,7 +357,8 @@ jp.forEach((x,i)=>{
 const but0=()=>{// прямоугольник
 	n++;
 	if(document.getElementById('ute'))ute.remove();// id='mov'
-	svg.innerHTML+=
+	//svg.innerHTML+=
+	figs.innerHTML+=
 		`<rect class="fg"  id='r`
 		+n+`' x='`
 		+dawn.x+`' y='`
@@ -318,7 +383,8 @@ const but0=()=>{// прямоугольник
 const but1=()=>{
 	n++;
 	if(document.getElementById('ute'))ute.remove();
-	svg.innerHTML+=
+	//svg.innerHTML+=
+	figs.innerHTML+=
 		`<ellipse class="fg" id='e`+n+`' rx="`
 		+(dawn.w/2)+`" ry="`
 		+(dawn.h/2)+`" cx="`
@@ -340,7 +406,8 @@ const but1=()=>{
 const but2=()=>{// линия
 	n++;
 	if(document.getElementById('ute'))ute.remove();
-	svg.innerHTML+=
+	//svg.innerHTML+=
+	figs.innerHTML+=
 		`<line  class="fg" id='ll`+n+`'  x1="`
 		+(dawn.x+dawn.w)+`" y1="`
 		+dawn.y+`" x2="`
@@ -361,7 +428,8 @@ const but2=()=>{// линия
 const but3=()=>{
 	n++;
 	if(document.getElementById('ute'))ute.remove();
-	svg.innerHTML+=
+	//svg.innerHTML+=
+	figs.innerHTML+=
 		`<line  class="fg" id='ll`+n+`'  x1="`
 		+dawn.x+`" y1="`
 		+dawn.y+`" x2="`
@@ -383,12 +451,21 @@ const but3=()=>{
 const but4=()=>{// полигон
 	n++;
 	let px,py;
-	let a10=b.map(i=>{return {x:(dawn.x+i.x*dawn.w/100),y:(dawn.y+i.y*dawn.h/100)}});
+	// прогон через проценты копит погрешности
+	//let a10=b.map(i=>{return {x:(dawn.x+i.x*dawn.w/100),y:(dawn.y+i.y*dawn.h/100)}});
+	if (!document.querySelector('ute')){//alert('need help')
+		dawn.x=gxmi;
+		dawn.y=gymi;
+		dawn.w=gwidth;
+		dawn.h=gheight;
+		}
+	let a10=bf.map(i=>{return {x:(dawn.x+i.x),y:(dawn.y+i.y)}});	
 	let a11=a10.map((j,k)=>{let o={x:(j.x-px),y:(j.y-py)};px=j.x;py=j.y;return (k===0)?j:o});
 	let a12=a11.map(v=>(v.x|0)+','+(v.y|0)).join(',');
 	//console.log(a12);
 	if(document.getElementById('ute'))ute.remove();
-	svg.innerHTML+=
+	//svg.innerHTML+=
+	figs.innerHTML+=
 		`<path class="fg" id='p`+n+`' d="m`
 		+a12
 		+`z" fill="`
@@ -399,7 +476,7 @@ const but4=()=>{// полигон
 		+(a11[0].y|0)+`' `
 		+` onmouseup="event.stopPropagation();" `
 		+` onmousemove="event.stopPropagation();" `
-		+` onmousedown="event.stopPropagation(); `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
 		+` if(document.getElementById('ute'))ute.remove(); `
 		+` den4(this,`+n+`); `
 		+`move=`
@@ -428,7 +505,8 @@ const but5=()=>{// ромб
 	let a12=a11.map(v=>(v.x|0)+','+(v.y|0)).join(',');
 
 	if(document.getElementById('ute'))ute.remove();
-	svg.innerHTML+=
+	//svg.innerHTML+=
+	figs.innerHTML+=
 		`<path class="fg" id='p`+n+`' d="m`
 		+a12
 		+`z" fill="`
@@ -452,17 +530,21 @@ const but5=()=>{// ромб
 const grid=()=>{// создает сетку
 	grid1.innerHTML='';
 	let xx=0;
+	let dx=dawn.w,dy=dawn.h;
+	dx=10; dy=10;
 	while(xx<900){
 	grid1.innerHTML+=
 	'<path d="M'+xx+' 0 V420" stroke="gray" stroke-width="1"></path>\r\n';
-	xx+=dawn.w;}
+	xx+=2*dx;}
 	let yy=0;
 	while(yy<420){
 	grid1.innerHTML+=
 	'<path d="M0 '+yy+' H900" stroke="gray" stroke-width="1"></path>\r\n';
-	yy+=dawn.h;}
-	stepx=dawn.w; stepy=dawn.h;
+	yy+=2*dy;}
+	stepx=dx; stepy=dy;
 }
+
+const del=()=>{}
 
 //***********************************
 const den0=(n)=>{ // квадрат
@@ -563,7 +645,8 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 				}
 				e.preventDefault();
 				break;
-		case ' ': but1();break;//	alert('space')			
+		case ' ': //but1();break;//	alert('space')			
+		         curve.click();
 
 		case '0': if(!curve.checked){bok++;bok=bok%5;
 			/*switch (bok){// подвижная грань
@@ -620,7 +703,7 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 		{	
 		datax=+b.dataset.x+hx;
 		datay=+b.dataset.y+hy;
-		if(isNaN(datax))alert('nan');
+		if(isNaN(datax)){return;}//alert('nan');
 		b.dataset.x=datax;// иногда масштбирование помещает сюда NaN
 		b.dataset.y=datay;			
 		let s=b.getAttribute('d').replace(/(m\d+,\d+)(.+)/,'$2');
@@ -631,6 +714,13 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 	});
 //**************************
 
+const cpy=x=>{ // копирование в буфер обмена
+	const cop=document.querySelector('#cop');
+	cop.value=pascal.innerText;
+	cop.select();
+	document.execCommand('copy');
+} 
+//*****************************************************************//
 </script>   
 </body>
 </html>
