@@ -136,8 +136,8 @@ textPath {font-family: sans-serif; font-size: 16px;}
 <label onclick="but0()">rest</label>
 <label onclick="but1()">round</label>
 <label onclick="but5()">romb</label>
-<label onclick="but2()">line /</label>
-<label onclick="but3()">line \</label>
+<!-- <label onclick="but2()">line /</label>
+<label onclick="but3()">line \</label> -->
 <label onclick="but4();
 a=[];c=-1;gogo.innerHTML='';
 ">clip</label>
@@ -292,6 +292,7 @@ const strokecolor=(x)=>{
 }
 
 const pas=()=>{// pascalabc.net код 
+	let bc,pc;
 	pascal.innerHTML=
 'uses graphABC;<br>'+	
 'begin<br>'+
@@ -304,6 +305,7 @@ const pas=()=>{// pascalabc.net код
 		d=document.getElementById('p'+i);
 		if(d){// полигон
 			bc=brushcolor(d);
+			pc=strokecolor(d);
 			s=d.getAttribute('d').replace(/[^\d-,]/g,'').split(',');
 			let a=[];
 			xx=0,yy=0;
@@ -312,8 +314,8 @@ const pas=()=>{// pascalabc.net код
 				yy+=+s[j+1];
 				a.push('('+xx+','+yy+')');
 			}	
-			//let e=bc+'Polygon('+a.join(',')+');<br>';
-			let e=bc+'Polyline('+a.join(',')+','+a[0]+');<br>';
+			let e=bc+pc+'Polygon('+a.join(',')+');<br>';
+			//let e=bc+'Polyline('+a.join(',')+','+a[0]+');<br>';
 			return e;
 		}
 		d=document.getElementById('e'+i);//
@@ -384,7 +386,7 @@ const but0=()=>{// прямоугольник
 		+ink+`' stroke='black' stroke-width='1' `
 		+` onmouseup="event.stopPropagation();" `
 		+` onmousemove="event.stopPropagation();" `
-		+` onmousedown="event.stopPropagation(); `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
 		+` if(document.getElementById('ute'))ute.remove(); `
 		//alert(`+n+`);
 		+` den0(this); `
@@ -409,7 +411,7 @@ const but1=()=>{
 		+ink+`"  stroke='black' stroke-width='1' `
 		+` onmouseup="event.stopPropagation();" `
 		+` onmousemove="event.stopPropagation();" `
-		+` onmousedown="event.stopPropagation(); `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
 		+` if(document.getElementById('ute'))ute.remove(); `
 		+` den1(this); `
 		+`move=`
@@ -419,6 +421,7 @@ const but1=()=>{
 	pas();
 	}
 
+/*
 const but2=()=>{// линия
 	n++;
 	if(document.getElementById('ute'))ute.remove();
@@ -432,7 +435,7 @@ const but2=()=>{// линия
 		+ink+`" stroke-linecap="square" stroke-width="5" `
 		+` onmouseup="event.stopPropagation();" `
 		+` onmousemove="event.stopPropagation();" `
-		+` onmousedown="event.stopPropagation(); `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
 		+` if(document.getElementById('ute'))ute.remove(); `
 		+` den2(this); `
 		+`move=`
@@ -441,7 +444,8 @@ const but2=()=>{// линия
 	bok=0;
 	pas();
 	}
-
+*/
+/*
 const but3=()=>{
 	n++;
 	if(document.getElementById('ute'))ute.remove();
@@ -455,7 +459,7 @@ const but3=()=>{
 		+ink+`" stroke-linecap="square" stroke-width="5" `
 		+` onmouseup="event.stopPropagation();" `
 		+` onmousemove="event.stopPropagation();" `
-		+` onmousedown="event.stopPropagation(); `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
 		+` if(document.getElementById('ute'))ute.remove(); `
 		+` den3(this); `
 		+`move=`
@@ -464,7 +468,7 @@ const but3=()=>{
 	bok=0;
 	pas();
 	}
-
+*/
 const but4=()=>{// полигон
 	n++;
 	let px,py;
@@ -482,6 +486,7 @@ const but4=()=>{// полигон
 	//console.log(a12);
 	if(document.getElementById('ute'))ute.remove();
 	//svg.innerHTML+=
+	if(a10.length>2){
 	figs.innerHTML+=
 		`<path class="fg" id='p`+n+`' d="m`
 		+a12
@@ -498,6 +503,23 @@ const but4=()=>{// полигон
 		+` den4(this,`+n+`); `
 		+`move=`
 		+n+`; bok=0;"></ellipse>`;
+		}
+	if(a10.length===2){//alert('line')
+	figs.innerHTML+=
+		`<line  class="fg" id='ll`+n+`'  x1="`
+		+(a11[0].x|0)+`" y1="`
+		+(a11[0].y|0)+`" x2="`
+		+((a11[0].x|0)+(a11[1].x|0))+`" y2="`
+		+((a11[0].y|0)+(a11[1].y|0))+`" stroke="`
+		+ink+`" stroke-linecap="square" stroke-width="5" `
+		+` onmouseup="event.stopPropagation();" `
+		+` onmousemove="event.stopPropagation();" `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
+		+` if(document.getElementById('ute'))ute.remove(); `
+		+` den3(this); `
+		+`move=`
+		+n+`;bok=0;"></line>`;		
+		}	
 	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
 	bok=0;
 	pas();
@@ -534,7 +556,7 @@ const but5=()=>{// ромб
 		+(a11[0].y|0)+`' `
 		+` onmouseup="event.stopPropagation();" `
 		+` onmousemove="event.stopPropagation();" `
-		+` onmousedown="event.stopPropagation(); `
+		+` onmousedown="if(!curve.checked){event.stopPropagation();} `
 		+` if(document.getElementById('ute'))ute.remove(); `
 		+` den4(this,`+n+`); `
 		+`move=`
@@ -577,18 +599,20 @@ dawn.y=n.getAttribute('cy')-n.getAttribute('ry');
 dawn.w=2*n.getAttribute('rx');
 dawn.h=2*n.getAttribute('ry');
 }
+/*
 const den2=(n)=>{// линия
 dawn.x=n.getAttribute('x1');
 dawn.y=n.getAttribute('y1');
 dawn.w=n.getAttribute('x2')+n.getAttribute('x1');
 dawn.h=n.getAttribute('y2')+n.getAttribute('y1');
 }
+
 const den3=(n)=>{// линия
 dawn.x=n.getAttribute('x1');
 dawn.y=n.getAttribute('y1');
 dawn.w=n.getAttribute('x2')+n.getAttribute('x1');
 dawn.h=n.getAttribute('y2')+n.getAttribute('y1');
-}
+}*/
 const den4=(n)=>{// полигон
 dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 }
