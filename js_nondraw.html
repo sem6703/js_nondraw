@@ -286,6 +286,10 @@ const brushcolor=(x)=>{
 	let c=colorToRGBA(x.getAttribute('fill'));
 	return `setbrushcolor(rgb(${c[0]},${c[1]},${c[2]}));`;
 }
+const strokecolor=(x)=>{
+	let c=colorToRGBA(x.getAttribute('stroke'));
+	return `setpencolor(rgb(${c[0]},${c[1]},${c[2]}));`;
+}
 
 const pas=()=>{// pascalabc.net код 
 	pascal.innerHTML=
@@ -330,6 +334,18 @@ const pas=()=>{// pascalabc.net код
 			let cx=+d.getAttribute('width');
 			let cy=+d.getAttribute('height');					
 			let e=bc+'Rectangle('+[(rx),(ry),(cx+rx),(cy+ry)].join(',')+');<br>';
+			return e;
+		}
+		d=document.getElementById('ll'+i);
+		if(d){//line
+			bc=strokecolor(d);
+			let x1=+d.getAttribute('x1');
+			let y1=+d.getAttribute('y1');
+			let x2=+d.getAttribute('x2');
+			let y2=+d.getAttribute('y2');					
+			let e=bc
+			+'Moveto('+x1+','+y1+'); '
+			+'Lineto('+x2+','+y2+');<br>';
 			return e;
 		}		
 		let m=[];
@@ -423,6 +439,7 @@ const but2=()=>{// линия
 		+n+`;bok=0;"></line>`;
 	au[n]={};for (let key in dawn){au[n][key] = dawn[key];}
 	bok=0;
+	pas();
 	}
 
 const but3=()=>{
@@ -530,8 +547,9 @@ const but5=()=>{// ромб
 const grid=()=>{// создает сетку
 	grid1.innerHTML='';
 	let xx=0;
-	let dx=dawn.w,dy=dawn.h;
-	dx=10; dy=10;
+	let dx, dy;
+	if(dawn.x+dawn.y){dx=dawn.w; dy=dawn.h;}else{dx=10; dy=10;}
+
 	while(xx<900){
 	grid1.innerHTML+=
 	'<path d="M'+xx+' 0 V420" stroke="gray" stroke-width="1"></path>\r\n';
