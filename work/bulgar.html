@@ -20,7 +20,16 @@ td:nth-child(7n+5),
 td:nth-child(7n+6),
 td:nth-child(7n){border:3px solid blue;}
 table{margin-left:51px;}
-  </style>  
+
+
+#tb2 td:nth-child(7n+2),
+#tb2 td:nth-child(7n+3),
+#tb2 td:nth-child(7n+4){border:3px solid green;}
+#tb2 td:nth-child(7n+5),
+#tb2 td:nth-child(7n+6),
+#tb2 td:nth-child(7n){border:3px solid springgreen;}
+ 
+</style>  
 </head>
 <body text="black" bgcolor="white">
 
@@ -171,7 +180,8 @@ a 10 10 0 0 0 14.139999999999999 9.1,c 17.64 -8, 46.06 -17.62, 73.60000000000001
 </div>
 
 <div id="tb"></div>
- 
+<hr>
+<div id="tb2"></div>
 <script>//fill-rule="evenodd"
 let a=
 [{n:'M',x:1, y:2.828},
@@ -304,14 +314,16 @@ a2.map((i,j)=>{
 	let x1,y1,b1=[];
 	let x2,y2,b2=[];
 	let m;// предыдущий
-	if((/[Aa]/g).test(i['n'])){b1=i.x.map(k=>k)}
+	if((/[Aa]/g).test(i['n'])){b1=i.x.map(k=>k);b2=i.x.map(k=>k);}
 	if((/[MLCAVH]/g).test(i['n'])){
 		if((/[MLC]/g).test(i['n'])){m=i['n'];basex=i.x;basey=i.y;}
 		if((/[A]/g).test(i['n'])){m=i['n'];basex=i.x[3];basey=i.x[4];}
 		if((/[V]/g).test(i['n'])){m=i['n'];basey=i.x;}
 		if((/[H]/g).test(i['n'])){m=i['n'];basex=i.x;}
 		x1=basex;
-		y1=basey;		
+		y1=basey;	
+		x2=basex;
+		y2=basey;		
 		}else{
 
 		if(j>0)
@@ -325,29 +337,62 @@ a2.map((i,j)=>{
 	if((/[Aa]/g).test(i['n'])){	
 	return '<td>'+j+'</td>'
 	+'<td>' +i['n']+'</td>'
-	+'<td>'+(i.x??'')+'</td>' 
-	+'<td>'+(i.y??'')+'</td>'
+	+'<td>'+(x1??'')+'</td>' 
+	+'<td>'+(y1??'')+'</td>'
 
 	+'<td>' +i['n']+'</td>'
-	+'<td>'+(x??'')+'</td>' 
-	+'<td>'+(y??'')+'</td>'
+	+'<td>'+(x2??'')+'</td>' 
+	+'<td>'+(y2??'')+'</td>'
 	}else{
 	return '<td>'+j+'</td>'
 	+'<td>' +i['n']+'</td>'
-	+'<td>'+(i.x??'')+'</td>' 
-	+'<td>'+(i.y??'')+'</td>'
+	+'<td>'+(x1??'')+'</td>' 
+	+'<td>'+(y1??'')+'</td>'
 
 	+'<td>' +i['n']+'</td>'
-	+'<td>'+(x??'')+'</td>' 
-	+'<td>'+(y??'')+'</td>'	
+	+'<td>'+(x2??'')+'</td>' 
+	+'<td>'+(y2??'')+'</td>'	
 	}
 	}
 	
 	).join('<tr></tr>')
 +'</tr></table>';
 
+//*******************
+//*********************
 
+tb2.innerHTML=
+'<table border="1"><tr>'+
+a2.map((i,j)=>{
+	if((/[Aa]/g).test(i['n'])){b1=i.x.map(k=>k);b2=i.x.map(k=>k);}
+	if((/[MLCAVH]/g).test(i['n'])){
+		if((/[MLC]/g).test(i['n'])){m=i['n'];basex=i.x;basey=i.y;}
+		if((/[A]/g).test(i['n'])){m=i['n'];basex=i.x[3];basey=i.x[4];}
+		if((/[V]/g).test(i['n'])){m=i['n'];basey=i.x;}
+		if((/[H]/g).test(i['n'])){m=i['n'];basex=i.x;}		
+		}else{
 
+		if(j>0)
+		{
+			if((/[mlc]/g).test(i['n'])){m=i['n'];x2=i.x+basex;y2=i.y+basey;}
+			if((/[a]/g).test(i['n'])){m=i['n'];b2[3]=i.x[3]+basex;b2[4]=i.x[4]+basey;}
+			if((/[v]/g).test(i['n'])){m=i['n'];x2=i.x+basey;}
+			if((/[h]/g).test(i['n'])){m=i['n'];x2=i.x+basex;}
+		}
+		}
+	
+	return '<td>'+j+'</td>'
+	+'<td>' +i['n']+'</td>'
+	+'<td>'+(i.x??'')+'</td>' 
+	+'<td>'+(i.y??'')+'</td>'
+
+	+'<td>' +'</td>'//+i['n']
+	+'<td>'+'</td>'// +(x??'')
+	+'<td>'+'</td>'//+(y??'')
+	}
+	
+	).join('<tr></tr>')
++'</tr></table>';
 </script>   
 </body>
 </html>
