@@ -388,7 +388,7 @@ a2.map((i,j)=>{
 	+'<td>'+(x1??'')+'</td>' 
 	+'<td>'+(y1??'')+'</td>'
 
-	+'<td>' +i['n']+'</td>'
+	+'<td>'+((i['n'].toLowerCase()===i['n'])?i['n'].toUpperCase():i['n'].toLowerCase())+'</td>'
 	+'<td>'+(x2??'')+'</td>' 
 	+'<td>'+(y2??'')+'</td>'
 	}else{
@@ -397,7 +397,7 @@ a2.map((i,j)=>{
 	+'<td>'+(x1??'')+'</td>' 
 	+'<td>'+(y1??'')+'</td>'
 
-	+'<td>' +i['n']+'</td>'
+	+'<td>'+((i['n'].toLowerCase()===i['n'])?i['n'].toUpperCase():i['n'].toLowerCase())+'</td>'
 	+'<td>'+(x2??'')+'</td>' 
 	+'<td>'+(y2??'')+'</td>'	
 	}
