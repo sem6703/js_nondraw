@@ -21,15 +21,15 @@ td:nth-child(7n+6),
 td:nth-child(7n){border:3px solid blue;}
 table{margin-left:51px;}
 
-
-#tb2 td:nth-child(9n+2),
-#tb2 td:nth-child(9n+3),
-#tb2 td:nth-child(9n+4){border:3px solid green;}
+#tb2 td:nth-child(9n+1),
+#tb2 td:nth-child(9n+2){border:3px solid coral;}
+#tb2 td:nth-child(9n+3){border: none;}
+#tb2 td:nth-child(9n+4),
 #tb2 td:nth-child(9n+5),
-#tb2 td:nth-child(9n+6),
-#tb2 td:nth-child(9n+7){border:3px solid springgreen;}
+#tb2 td:nth-child(9n+6){border:3px solid green;}
+#tb2 td:nth-child(9n+7),
 #tb2 td:nth-child(9n+8),
-#tb2 td:nth-child(9n+9){border:3px solid coral;}
+#tb2 td:nth-child(9n+9){border:3px solid springgreen;}
 
 
 td:has(input:checked) {background: coral}
@@ -373,7 +373,7 @@ a2.map((i,j)=>{
 	if((/[Aa]/g).test(i['n'])){b1=i.x.map(k=>k);b2=i.x.map(k=>k);}
 	if((/[MLCAVH]/g).test(i['n'])){
 		if((/[MLC]/g).test(i['n'])){m=i['n'];afterx=i.x;aftery=i.y;x2=i.x-beforex;y2=i.y-beforey;}
-		if((/[A]/g).test(i['n'])){m=i['n'];afterx=i.x[3];aftery=i.x[4];x2=b2;x2[3]=b2[3]-beforex;x2[4]=b2[4]-beforey;}
+		if((/[A]/g).test(i['n'])){m=i['n'];afterx=i.x[5];aftery=i.x[6];x2=b2;x2[5]=b2[5]-beforex;x2[6]=b2[6]-beforey;}
 		if((/[V]/g).test(i['n'])){m=i['n'];aftery=i.x;x2=i.x-beforey;y2=null;}
 		if((/[H]/g).test(i['n'])){m=i['n'];afterx=i.x;x2=i.x-beforex;y2=null;}		
 		}else{
@@ -381,7 +381,7 @@ a2.map((i,j)=>{
 		if(j>0)
 		{
 			if((/[mlc]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
-			if((/[a]/g).test(i['n'])){m=i['n'];b2[3]=i.x[3]+beforex;b2[4]=i.x[4]+beforey;x2=null;y2=null;}
+			if((/[a]/g).test(i['n'])){m=i['n'];b2[5]=i.x[5]+beforex;b2[6]=i.x[6]+beforey;x2=null;y2=null;}
 			if((/[v]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
 			if((/[h]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
 		}
