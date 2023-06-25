@@ -372,20 +372,28 @@ tb2.innerHTML=
 a2.map((i,j)=>{
 	if((/[Aa]/g).test(i['n'])){b1=i.x.map(k=>k);b2=i.x.map(k=>k);}
 	if((/[MLCAVH]/g).test(i['n'])){
-		if((/[MLC]/g).test(i['n'])){m=i['n'];afterx=i.x;aftery=i.y;x2=i.x-beforex;y2=i.y-beforey;}
-		if((/[A]/g).test(i['n'])){m=i['n'];afterx=i.x[5];aftery=i.x[6];x2=b2;x2[5]=b2[5]-beforex;x2[6]=b2[6]-beforey;}
-		if((/[V]/g).test(i['n'])){m=i['n'];aftery=i.x;x2=i.x-beforey;y2=null;}
-		if((/[H]/g).test(i['n'])){m=i['n'];afterx=i.x;x2=i.x-beforex;y2=null;}		
+		if((/[MLC]/g).test(i['n'])){m=i['n'];afterx=i.x;aftery=i.y;x2=+(i.x-beforex).toFixed(2);y2=+(i.y-beforey).toFixed(2);}
+		if((/[A]/g).test(i['n'])){m=i['n'];afterx=i.x[5];aftery=i.x[6];x2=b2;x2[5]=+(b2[5]-beforex).toFixed(2);x2[6]=+(b2[6]-beforey).toFixed(2);y2=null;}
+		if((/[V]/g).test(i['n'])){m=i['n'];aftery=i.x;x2=+(i.x-beforey).toFixed(2);y2=null;}
+		if((/[H]/g).test(i['n'])){m=i['n'];afterx=i.x;x2=+(i.x-beforex).toFixed(2);y2=null;}		
 		}else{
 
-		if(j>0)
-		{
-			if((/[mlc]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
-			if((/[a]/g).test(i['n'])){m=i['n'];b2[5]=i.x[5]+beforex;b2[6]=i.x[6]+beforey;x2=null;y2=null;}
-			if((/[v]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
-			if((/[h]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
+		//if(j>0)
+		//{
+			if((/[mlc]/g).test(i['n'])){m=i['n'];x2=+(i.x+beforex).toFixed(2);y2=+(i.y+beforey).toFixed(2);}
+			if((/[a]/g).test(i['n'])){m=i['n'];b2[5]=+(i.x[5]+beforex).toFixed(2);b2[6]=+(i.x[6]+beforey).toFixed(2);x2=b2;y2=null;}
+			if((/[v]/g).test(i['n'])){m=i['n'];x2=+(i.x+beforey).toFixed(2);y2=null;}
+			if((/[h]/g).test(i['n'])){m=i['n'];x2=+(i.x+beforex).toFixed(2);y2=null;}
+			if((/[Zz]/g).test(i['n'])){m=i['n'];x2=null;y2=null;}
+		//}
 		}
+		if(''===i['n']){
+		switch (m){
+		case 'c': x2=+(i.x+beforex).toFixed(2);y2=+(i.y+beforey).toFixed(2); break;
+		case 'C': x2=+(i.x-beforex).toFixed(2);y2=+(i.y-beforey).toFixed(2); break;		
+		}//switch
 		}
+		if(!j){x2=+(i.x).toFixed(2);y2=+(i.y).toFixed(2);}
 	showx=beforex; showy=beforey;
 	beforex=afterx;beforey=aftery;
 	return '<td>' +showx+'</td>'
