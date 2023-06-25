@@ -363,7 +363,11 @@ case 'H': return `${i['n']}${i.x}`;
 
 //**************************
 
-
+const inv=(x)=>{// инверсия регистра
+	if (x==='')return '';
+	if (x.toLowerCase()===x)return x.toUpperCase();
+	return x.toLowerCase();
+	}
 //*******************
 //*********************
 let beforex,beforey,afterx,aftery,showx,showy;
@@ -404,7 +408,7 @@ a2.map((i,j)=>{
 	+'<td>'+(i.x??'')+'</td>' 
 	+'<td>'+(i.y??'')+'</td>'
 
-	+'<td>' +'</td>'//+i['n']
+	+'<td>'+inv(i['n'])+'</td>'//+i['n']
 	+'<td>'+(x2??'')+'</td>'// +(x??'')
 	+'<td>'+(y2??'')+'</td>'//+(y??'')
 	
