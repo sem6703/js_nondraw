@@ -370,6 +370,7 @@ const inv=(x)=>{// инверсия регистра
 	}
 //*******************
 //*********************
+let b=[];
 let beforex,beforey,afterx,aftery,showx,showy;
 tb2.innerHTML=
 '<table border="1"><tr>'+
@@ -400,6 +401,7 @@ a2.map((i,j)=>{
 		if(!j){x2=+(i.x).toFixed(2);y2=+(i.y).toFixed(2);}
 	showx=beforex; showy=beforey;
 	beforex=afterx;beforey=aftery;
+	b.push([{n:i['n'],x:i.x,y:i.y},{n:inv(i['n']),x:x2,y:y2}]);
 	return '<td>' +showx+'</td>'
 	+'<td>' +showy+'</td>'
 	
@@ -416,6 +418,10 @@ a2.map((i,j)=>{
 	
 	).join('<tr></tr>')
 +'</tr></table>';
+
+console.log(b);
+
+
 </script>   
 </body>
 </html>
