@@ -147,14 +147,19 @@ Z" fill="navy"></path>
 <path fill-rule="evenodd" d="M20 57,v198 l 66 -16, l 64 10,V54 l -62 -15, l -68 18,zm 150 -2.82,v195 l 64 -10, l 66 16,V57 l -68 -18, l -62 15,zM 160 36,L 86 19, l -80 22,L0 50,v220 l 14 9, l 74 -20, l 64 18, l 16 0, l 64 -18, l 74 20,L320 270,v-220 l-6 -9, l -80 -22, L 160 36,z" fill="black"></path> 
 
 <g id="gaf">
+
+<path fill-rule="evenodd" d="M20 57 V 255 L 86 239 L 150 255 V 54 L 86 37 L 20 57z    
+M170 51 V255  L 233 239 L 300 257 V 57 L 231 39 L 170 53 z
+M163 37 L 85 18 L 5 44 L 0 50 V 270 L 17 281 L 90 258 L 152 277 L171 277 L 237 258 L 308 277 L 321 271 V 50 L 311 40 L 236 16 L 163 37 z " fill="fuchsia"></path>
+</g>
+<!--
 <path fill-rule="evenodd" d="M20 57 V 255 L 86 239 L 150 249 V 54 
 L 86 37 L 20 57
 z    M234 51 v 249 l 148 44 l 150 70 V 57
   L 382 39 L 288 72 z
+  
+  M160 36 L 86 19 l 60 41 L0 50 v 270 l 14 109 l 74 30 l 64 68 l 16 100 l 64 32 l 74 70 L320 270 v 50 l 634 531 l 240 248 L 160 36   
 z " fill="fuchsia"></path> 
-</g>
-<!--
-  M160 36 L 86 19 l 60 41 L0 50 v 270 l 14 109 l 74 30 l 64 68 l 16 100 l 64 32 l 74 70 L320 270 v 50 l 634 531 l 240 248 L 160 36 
 
 
 -->
@@ -403,6 +408,7 @@ return i[1]['n']+(i[1].x??'')+' '+(i[1].y??'')
 }).join(' ');
 //
 //
+/*
 gaf.innerHTML=
 `<path fill-rule="evenodd" d="M20 57 V 255 L 86 239 L 150 249 V 54 `
 +`L 86 37 L 20 57`
@@ -410,6 +416,7 @@ gaf.innerHTML=
 +` L 382 39 L 288 72 z`
 +`z " fill="fuchsia"></path>`; 
 
+*/
 let xxx=382, yyy=39;
  //********************* выбранная точка перемещается курсорными клавишами
  document.addEventListener('keydown', (e) => {// ←↑↓→
@@ -445,15 +452,18 @@ let xxx=382, yyy=39;
 			
 		}// numpad0	, 0	
 		default: break;
-	}// switch
-	gaf.innerHTML=
-`<path fill-rule="evenodd" d="M20 57 V 255 L 86 239 L 150 249 V 54 `
+	}// switch//320 270
+	gaf.innerHTML=//${xxx} ${yyy}
+`<path fill-rule="evenodd" d="M20 57 V 255 L 86 239 L 150 255 V 54 `
 +`L 86 37 L 20 57`
-+`z    M234 51 v 249 l 148 44 l 150 70 V 57`
-+` L ${xxx} ${yyy} L 288 72 z`
-+`z " fill="fuchsia"></path>`;
-	h1.innerText=xxx+' '+yyy;
-	});
++`z    M170 51 V255  L 233 239 L 300 257 V 57`
++` L 231 39 L 170 53 z`//288 72  ///234 51 /// //249 148 44/150 70
+//150 249
++`M163 37 L 85 18 L 5 44 L 0 50 V 270 L 17 281 L 90 258 L 152 277 L171 277 `//240 248
++`L 237 258 L 308 277 L 321 271 V 50 L 311 40 L 236 16 L 163 37 `//160 36
++`z " fill="fuchsia"></path>`; //160 36 86 19 634 531
+	h1.innerText=xxx+' '+yyy;//60 41 14 109 74 3064 68${xxx} ${yyy}
+	});// 16 100 64 3274 70 320 49
 
 </script>   
 </body>
