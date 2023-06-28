@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="data:image/gif;base64,R0lGODlhEAAQAOYAAP///6ZMpn8Af7BisGcAZ24Abt673v8AAHoAenAAcKVGpdGg0WgAaP7+/v39/eLE4mkAaWwAbObH5pAcj28Ab5gomKhQqG0AbXMAc28AbnIAcrVktYYMhpkrmZw2m4wQjK9gr82ZzXUAddOl08iPyMyQzNSi1K1TrerO6mUAZXYAdnEAcVsAW10AXVwAXGIAYmsAa7FbsWIAY8GDwb9+v8N+w8qQyrlrua1QrdCf0GQAZIYAhrl0uXkAed6z3pYqlr1wvXQAdN2z3X0AfXgAeJMfk6M/o6hRqIUGhbhuuHsAe+XH5WoAal4AXtWn1Z49noEDgbx5vAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFewAAACwAAAAAEAAQAAAHtIAAgoOEhYMLExkeIYI5PwQISYIBBAwUGgkMKTI6MAkJMARPAgUFFRsfIioiO0BCRkoFUAIGB7YHIyszt7YUs7YODgckLDQHwcJNvw3MByUtNQfMDQfKAscNwiUu0Q7Z1b/e2tzYyeHf293f1rwHJi827Tq/DxYcICcwNzwUQ0dLsgQggHBBAwYEGhD0CEKkQI8VsxJEwNBBQ4QCEmEUQcIEApQBCiQMQhEDhw9CTqIYWjkoEAA7">
+  
+  
+  <title>svg</title>
+  <style>
+  *:not(hr), *::after, *::before {box-sizing: border-box;margin:0;padding:0;border:0}ul {list-style-type: none}
+#i{padding: 33px 0;background: linear-gradient(rgba(0,0,0,0.9), blue); 
+text-align: center;
+}
+/*t0d:nth-child(7n+1)*/
+td:nth-child(7n+2),
+td:nth-child(7n+3),
+td:nth-child(7n+4){border:3px solid coral;}
+td:nth-child(7n+5),
+td:nth-child(7n+6),
+td:nth-child(7n){border:3px solid blue;}
+table{margin-left:51px;}
+
+#tb2 td:nth-child(9n+1),
+#tb2 td:nth-child(9n+2){border:3px solid coral;}
+#tb2 td:nth-child(9n+3){border: none;}
+#tb2 td:nth-child(9n+4),
+#tb2 td:nth-child(9n+5),
+#tb2 td:nth-child(9n+6){border:3px solid green;}
+#tb2 td:nth-child(9n+7),
+#tb2 td:nth-child(9n+8),
+#tb2 td:nth-child(9n+9){border:3px solid springgreen;}
+
+
+td:has(input:checked) {background: coral}
+tr:has(td:has(input:checked)) {background: blue}
+td:has(input:checked) ~ td:nth-child(7n+4){background: coral}
+td:has(input:checked) ~ td:nth-child(7n+3){background: coral}
+td:has(input:not(:checked)) ~ td:nth-child(7n+4){background: yellow}
+td:has(input:not(:checked)) ~ td:nth-child(7n+3){background: yellow}
+
+td:has(input:checked) ~ td:nth-child(7n+6){background: yellow}
+td:has(input:checked) ~ td:nth-child(7n){background: yellow}
+td:has(input:not(:checked)) ~ td:nth-child(7n+6){background: coral} 
+td:has(input:not(:checked)) ~ td:nth-child(7n+7){background: coral}
+
+label{display:block;width:100%;min-width:10px;b0ackground:black;}
+l0abel:empty{padding:50%;}
+
+
+</style>  
+</head>
+<body text="black" bgcolor="white">
+
+
+
+<div id=i>
+<svg id="svg" width="900" height="415" viewBox="0 0 900 415" fill="none">
+<style type="text/css">
+.rect1, .polygon1 {stroke: blue;}
+.txt1 {font-family: Arial; font-size: 12px; line-height: 0; fill:white;}
+textPath {font-family: sans-serif; font-size: 16px;}
+</style>
+<rect class="x" x="0" y="0" width="900" height="415" fill="white"></rect>
+<!--
+<path fill-rule="evenodd" d="M20 57,v198 l 66 -16, l 64 10,V54 l -62 -15, l -68 18,zm 150 -2.82,v195 l 64 -10, l 66 16,V57 l -68 -18, l -62 15,zM 160 36,L 86 19, l -80 22,L0 50,v220 l 14 9, l 74 -20, l 64 18, l 16 0, l 64 -18, l 74 20,L320 270,v-220 l-6 -9, l -80 -22, L 160 36,z" fill="black"></path> 
+-->
+
+<g id="gaf">
+<path fill-rule="evenodd" d="M20 57 V 255 A 99 99 0 0 0 86 239 A 99 99 0 0 0 150 255 V 54 L 86 37 L 20 57z    
+M170 51 V255  L 233 239 L 300 257 V 57 L 231 39 L 170 53 z
+M163 37 L 85 18 L 5 44 L 0 50 V 270 L 17 281 L 90 258 L 152 277 L171 277 L 237 258 L 308 277 L 321 271 V 50 L 311 40 L 236 16 L 163 37 z " fill="fuchsia"></path>
+</g>
+
+</svg>
+<h1 id="h1" style="color:white"></h1>
+</div>
+<hr>
+<div id="tbc"></div>
+<hr>
+<div id="tb"></div>
+<hr>
+<div id="tb2"></div>
+
+<script>//fill-rule="evenodd"
+let a=
+[{n:'M',x:1, y:2.828},
+{n:'v',x:9.923},
+{n:'c',x:.918,y:-.35}, 
+{n:'',x:2.107,y:-.692}, 
+{n:'',x:3.287,y:-.81}, 
+{n:'',x:1.094,y:-.111}, 
+{n:'',x:2.278,y:-.039}, 
+{n:'',x:3.213,y:.492},
+{n:'V',x:2.687},
+{n:'c',x:-.654,y:-.689},
+{n:'',x:-1.782,y:-.886},
+{n:'',x:-3.112,y:-.752},
+{n:'',x:-1.234,y:.124},
+{n:'',x:-2.503,y:.523},
+{n:'',x:-3.388,y:.893},
+{n:'z'},
+
+{n:'m',x:7.5,y:-.141},
+{n:'v',x:9.746},
+{n:'c',x:.935,y:-.53}, 
+{n:'',x:2.12,y:-.603}, 
+{n:'',x:3.213,y:-.493}, 
+{n:'',x:1.18,y:.12}, 
+{n:'',x:2.37,y:.461}, 
+{n:'',x:3.287,y:.811},
+{n:'V',x:2.828},
+{n:'c',x:-.885,y:-.37},
+{n:'',x:-2.154,y:-.769},
+{n:'',x:-3.388,y:-.893},
+{n:'',x:-1.33,y:-.134},
+{n:'',x:-2.458,y:.063},
+{n:'',x:-3.112,y:.752},
+{n:'z'},
+{n:'M',x:8, y:1.783},
+{n:'C',x:7.015,y:.936},
+{n:'',x:5.587,y:.81}, 
+{n:'',x:4.287,y:.94},
+{n:'c',x:-1.514,y:.153},
+{n:'',x:-3.042,y:.672},
+{n:'',x:-3.994,y:1.105},
+{n:'A',x:[.5,.5, 0, 0, 0, 0, 2.5]},
+{n:'v',x:11},
+{n:'a',x:[.5,.5, 0, 0, 0, .707, .455]},
+{n:'c',x:.882,y:-.4}, 
+{n:'',x:2.303,y:-.881}, 
+{n:'',x:3.68,y:-1.02}, 
+{n:'',x:1.409,y:-.142}, 
+{n:'',x:2.59,y:.087}, 
+{n:'',x:3.223,y:.877},
+{n:'a',x:[.5,.5, 0, 0, 0, .78, 0]},
+{n:'c',x:.633,y:-.79}, 
+{n:'',x:1.814,y:-1.019}, 
+{n:'',x:3.222,y:-.877}, 
+{n:'',x:1.378,y:.139}, 
+{n:'',x:2.8,y:.62}, 
+{n:'',x:3.681, y:1.02},
+{n:'A',x:[.5,.5, 0, 0, 0, 16, 13.5]},
+{n:'v',x:-11},
+{n:'a',x:[.5,.5, 0, 0, 0,-.293, -.455]},
+{n:'c',x:-.952,y:-.433},
+{n:'',x:-2.48,y:-.952},
+{n:'',x:-3.994,y:-1.105},
+{n:'C',x:10.413,y:.809}, 
+{n:'',x:8.985,y:.936}, 
+{n:'',x:8,y:1.783},
+{n:'z'}];
+//*******************
+let c=[
+{n:'M', x:20, y:57}, 
+{n:'V', y:255}, //, b:[99, 99, 0, 0, 1],b:[99, 99, 0, 0, 1]
+{n:'C', x:38, y:248},
+{n:'', x:62, y:242},
+{n:'', x:86, y:239},//{n:'L', x:86, y:239}, //A 99 99 0 0 0 86 239 //
+{n:'L', x:150, y:255},//{n:'L', x:150, y:255}, //A 99 99 0 0 0 150 255 //
+{n:'V', y:54}, 
+{n:'L', x:86, y:37}, 
+{n:'L', x:20, y:57},
+{n:'z'},    
+{n:'M', x:170, y:51}, 
+{n:'V', y:255},  
+{n:'L', x:233, y:239}, 
+{n:'L', x:300, y:257}, 
+{n:'V', y:57}, 
+{n:'L', x:231, y:39}, 
+{n:'L', x:170, y:53}, 
+{n:'z'},
+{n:'M', x:163, y:37}, 
+{n:'L', x:85, y:18}, 
+{n:'L', x:5, y:44}, 
+{n:'L', x:0, y:50}, 
+{n:'V', y:270}, 
+{n:'L', x:17, y:281}, 
+{n:'L', x:90, y:258}, 
+{n:'L', x:152, y:277}, 
+{n:'L', x:171, y:277}, 
+{n:'L', x:237, y:258}, 
+{n:'L', x:308, y:277}, 
+{n:'L', x:321, y:271}, 
+{n:'V', y:50}, 
+{n:'L', x:311, y:40}, 
+{n:'L', x:236, y:16}, 
+{n:'L', x:163, y:37}, 
+{n:'z'}];
+//****************
+let c2=[
+{n:'M', x:20 ,y:57},
+{n:'v', x:198}, 
+{n:'l', x:66 ,y:-16}, 
+{n:'l', x:64 ,y:10},
+{n:'V', x:54}, 
+{n:'l', x:-62 ,y:-15}, 
+{n:'l', x:-68 ,y:18},
+{n:'z'},
+{n:'m', x:150 ,y:-3},
+{n:'v', x:195}, 
+{n:'l', x:64 ,y:-10}, 
+{n:'l', x:66 ,y:16},
+{n:'V', x:57}, 
+{n:'l', x:-68 ,y:-18}, 
+{n:'l', x:-62 ,y:15},
+{n:'z'},
+{n:'M', x:160 ,y:36},
+{n:'L', x:86 ,y:19}, 
+{n:'l', x:-80 ,y:22},
+{n:'L', x:0 ,y:50},
+{n:'v', x:220}, 
+{n:'l', x:14 ,y:9}, 
+{n:'l', x:74 ,y:-20},
+{n:'l', x:64 ,y:18}, 
+{n:'l', x:16 ,y:0}, 
+{n:'l', x:64 ,y:-18}, 
+{n:'l', x:74 ,y:20},
+{n:'L', x:320 ,y:270},
+{n:'v', x:-220}, 
+{n:'l', x:-6 ,y:-9}, 
+{n:'l', x:-80 ,y:-22}, 
+{n:'L', x:160 ,y:36},
+{n:'z'}];
+//*********************
+
+let cx=0, cy=0, m=20;
+let a2=a.map(i=>{
+switch (i['n']){//+cy+cx
+case  '': 
+	switch (d){
+	case 'm':return {n:i['n'],x:+(i.x*m).toFixed(0),y:+(i['y']*m).toFixed(0)};//+cy+cx
+	case 'M':return {n:i['n'],x:+(i.x*m).toFixed(0),y:+(i['y']*m).toFixed(0)};//+cy+cx
+	case 'c':return {n:i['n'],x:+(i.x*m).toFixed(0),y:+(i['y']*m).toFixed(0)};//+cy+cx
+	case 'C':return {n:i['n'],x:+(i.x*m).toFixed(0),y:+(i['y']*m).toFixed(0)};//+cy+cx
+	}
+case 'm':d=i['n']; return {n:i['n'],x:+(i.x*m).toFixed(0),y:i['y']*m};//+cx+cy
+case 'M':d=i['n']; return {n:i['n'],x:+(i.x*m).toFixed(0)+cx,y:+(i['y']*m).toFixed(0)+cy};//
+case 'c':d=i['n']; return {n:i['n'],x:+(i.x*m).toFixed(0),y:+(i['y']*m).toFixed(0)};//+cy+cx
+case 'C':d=i['n']; return {n:i['n'],x:+(i.x*m).toFixed(0)+cx,y:+(i['y']*m).toFixed(0)+cy};//
+case 'z': return {n:i['n']};
+case 'a': return {n:i['n'],x:i.x.map(j=>+(j*m).toFixed(0))};
+case 'A': return {n:i['n'],x:i.x.map(j=>+(j*m).toFixed(0))};
+case 'v': return {n:i['n'],x:+(i.x*m).toFixed(0)};
+case 'V': return {n:i['n'],x:+(i.x*m).toFixed(0)};
+case 'h': return {n:i['n'],x:+(i.x*m).toFixed(0)};
+case 'H': return {n:i['n'],x:+(i.x*m).toFixed(0)};
+}
+});
+
+
+let a3=a2.map(i=>{
+switch (i['n']){
+case '' : return `${i['n']} ${i.x} ${i['y']},`;
+case 'm': return `${i['n']} ${i.x} ${i['y']},`;
+case 'M': return `${i['n']} ${i.x} ${i['y']},`;
+case 'c': return `${i['n']} ${i.x} ${i['y']},`;
+case 'C': return `${i['n']} ${i.x} ${i['y']},`;
+case 'z': return i['n'];
+case 'a': return `${i['n']} ${i.x.join(' ')},`;
+case 'A': return `${i['n']} ${i.x.join(' ')},`;
+case 'v': return `${i['n']}${i.x}`;
+case 'V': return `${i['n']}${i.x}`;
+case 'h': return `${i['n']}${i.x}`;
+case 'H': return `${i['n']}${i.x}`;
+}
+});
+const inv=(x)=>{// инверсия регистра
+	if (x==='')return '';
+	if (x.toLowerCase()===x)return x.toUpperCase();
+	return x.toLowerCase();
+	}
+//*******************
+//*********************
+let cuc=2;
+let x2c,y2c;
+let bc=[];//beforexc,beforeyc,afterxc,afteryc,showxc,showyc,
+let basexc,baseyc,show2xc,show2yc;
+let turtoxc=0,turtoyc=0;
+//***********************
+const make=()=>{
+	bc=[];turtxc=0;turtyc=0;turtoxc=0;turtoyc=0;
+	tbc.innerHTML=
+	'<table border="1"><tr>'+
+	c.map((i,j)=>{
+		if((/[Aa]/g).test(i['n'])){b1c=i.b.map(k=>k);b2c=i.b.map(k=>k);}
+		if((/[MLCAVH]/g).test(i['n'])){
+			if((/[MLC]/g).test(i['n'])){mc=i['n'];
+			turtoxc=turtxc; turtoyc=turtyc;
+			turtxc=i.x; turtyc=i.y;
+			basexc=i.x; baseyc=i.y;
+			show2xc=turtxc;show2yc=turtyc;
+			}
+			if((/[A]/g).test(i['n'])){mc=i['n'];
+	turtoxc=turtxc; turtoyc=turtyc;		
+			turtxc=i.x; turtyc=i.y; b3c=i.b;//x[6][5]
+			show2xc=turtxc;show2yc=turtyc;
+			}
+			if((/[V]/g).test(i['n'])){mc=i['n'];
+			turtoxc=turtxc; turtoyc=turtyc;
+			turtyc=i.y;
+
+			show2xc=null;show2yc=turtyc;
+			}
+			if((/[H]/g).test(i['n'])){mc=i['n'];
+			turtoxc=turtxc; turtoyc=turtyc;
+			turtxc=i.x;
+
+			show2xc=turtxc;show2yc=null;
+			}		
+			}else{
+
+			//if(j>0)
+			//{
+				if((/[mlc]/g).test(i['n'])){mc=i['n'];
+				//x2=+(i.x+beforex).toFixed(2);y2=+(i.y+beforey).toFixed(2);
+				turtoxc=turtxc; turtoyc=turtyc;
+				turtxc=i.x+turtxc;turtyc=i.y+turtyc;
+				show2x=turtx;show2y=turty;
+				}
+				if((/[a]/g).test(i['n'])){mc=i['n'];
+				//b2[5]=+(i.x[5]+beforex).toFixed(2);b2[6]=+(i.x[6]+beforey).toFixed(2);x2=b2;y2=null;
+				//turtx=b2[5]+basex;turty=b2[6]+basey;
+				//show2x=turtx;show2y=turty;
+				
+				}
+				if((/[v]/g).test(i['n'])){mc=i['n'];
+				//x2=+(i.x+beforey).toFixed(2);y2=null;
+				turtoxc=turtxc; turtoyc=turtyc;
+				turtyc=i.y+turtyc;
+				show2xc=null;show2yc=turtyc;
+				}
+				if((/[h]/g).test(i['n'])){mc=i['n'];
+				//x2=+(i.x+beforex).toFixed(2);y2=null;
+				turtoxc=turtxc; turtoyc=turtyc;
+				turtxc=i.x+turtxc;
+				show2xc=turtxc;show2yc=null;
+				}
+				if((/[Zz]/g).test(i['n'])){mc=i['n'];
+				//x2=null;y2=null;
+				show2xc=null;show2yc=null;
+				}
+			//}
+			}
+			if(''===i['n']){
+			switch (mc){
+			case 'c': 
+			//x2=+(i.x+beforex).toFixed(2);
+			//y2=+(i.y+beforey).toFixed(2); 
+			turtoxc=turtxc; turtoyc=turtyc;
+			turtxc=i.x+turtxc;turtyc=i.y+turtyc;
+			show2xc=turtxc;show2yc=turtyc;
+			break;
+			case 'C': 
+			//x2=+(i.x-beforex).toFixed(2);y2=+(i.y-beforey).toFixed(2); 
+			turtoxc=turtxc; turtoyc=turtyc;
+			//turtxc=i.x-basexc;turtyc=i.y-baseyc;//+basex+basey
+			//turtxc=basexc-i.x;turtyc=baseyc-i.y;//+basex+basey
+			turtxc=i.x;turtyc=i.y;//+basex+basey
+			show2xc=turtxc;show2yc=turtyc;
+			//alert('o');
+			break;		
+			}//switch
+			}
+			//if(!j){x2=+(i.x).toFixed(2);y2=+(i.y).toFixed(2);}
+		//showx=beforex; showy=beforey;
+		//beforex=afterx;beforey=aftery;
+		//turtx=+(+turtx).toFixed(2);turty=+(+turty).toFixed(2);
+		//if(show2x)show2x=turtx; if(show2y)show2y=turty;
+		//if (turtx<0)alert('x'+j);
+		//if (turty<0)alert('y'+j);
+		//b.push([{n:i['n'],x:i.x,y:i.y},{n:inv(i['n']),x:x2,y:y2}]);
+		bc.push([{n:i['n'],x:show2xc,y:show2yc},
+		{n:inv(i['n']),x:((show2xc!==null)?(turtxc-turtoxc):''),y:((show2yc!==null)?(turtyc-turtoyc):'')}]);//
+		if((/[Aa]/g).test(i['n'])){bc[j][0].b=b3c;}//b1c
+		bc[0][1]['n']='M';
+		
+		return'<tr id="t'+j+'"><td onclick="cuc='+j+';this.style.background=`springgreen`;"'
+		+ ((j===cuc)?' bgcolor="springgreen"':'')+ '>'+j+'</td>' 
+		+'<td>' +turtxc+'</td>'
+		+'<td>' +turtyc+'</td>'
+		
+		
+		+'<td>' +i['n']+'</td>'
+		+'<td>'+(i.x??'')+'</td>' 
+		+'<td>'+(i.y??'')+'</td>'
+
+		+'<td>'+(bc[j][1]['n'])+'</td>'//
+		+'<td>'+(bc[j][1].x)+'</td>'// +(x2c??'')
+		+'<td>'+(bc[j][1].y)+'</td></tr>'//+(y2c??'')
+		
+		}//(Number.isNaN(i.x)(Number.isNaN(i.y)
+		
+		).join('<tr></tr>')
+	+'</tr></table>';
+	//let h=[...tbc.querySelectorAll('tr')]; //alert(h.length);
+	//h[cuc].style.background='yellow';
+	
+}// make end
+
+make();
+
+//console.log(b);
+
+//alert(a3.join(''));
+//**************************
+
+
+//*******************
+//*********************
+
+
+//console.log(b);
+
+
+//
+//
+/*
+gaf.innerHTML=
+`<path fill-rule="evenodd" d="M20 57 V 255 L 86 239 L 150 249 V 54 `
++`L 86 37 L 20 57`
++`z    M234 51 v 249 l 148 44 l 150 70 V 57`
++` L 382 39 L 288 72 z`
++`z " fill="fuchsia"></path>`; 
+
+*/
+console.log(bc);
+let xxx=382, yyy=39;
+ //********************* выбранная точка перемещается курсорными клавишами
+ document.addEventListener('keydown', (e) => {// ←↑↓→
+	// сканирование клавы 
+	let hx,hy;
+//alert(bc[cuc][0].y);
+	switch(e.key) {//
+		case 'ArrowDown': //↓
+				c[cuc].y++;
+				//bc[cuc][0].y++;
+				//bc[cuc][1].y++;
+				if(Number.isNaN(c[cuc].y))c[cuc].y=null;
+				yyy++;
+				e.preventDefault();
+				break;		
+		case 'ArrowUp': //↑
+				c[cuc].y--;
+				//bc[cuc][0].x--;
+				//bc[cuc][0].y--;
+				//bc[cuc][1].y--;
+				if(Number.isNaN(c[cuc].y))c[cuc].y=null;
+                yyy--;
+				e.preventDefault();
+				break;
+						  
+		case 'ArrowRight': //→
+				
+				c[cuc].x++;
+				//bc[cuc][0].x++;
+				//bc[cuc][1].x++;
+				if(Number.isNaN(c[cuc].x))c[cuc].x=null;
+				xxx++;
+				e.preventDefault();
+				break;
+					
+		case 'ArrowLeft': //←
+				c[cuc].x--;
+				//bc[cuc][0].x--;
+				//bc[cuc][1].x--;
+				if(Number.isNaN(c[cuc].x))c[cuc].x=null;
+				xxx--;
+				e.preventDefault();
+				break;
+		case ' ': 		
+		         curve.click();
+				e.preventDefault();
+				break;				 
+
+		case '0': if(!curve.checked){bok++;bok=bok%5;
+			
+		}// numpad0	, 0	
+		default: break;
+	}// switch//${xxx} ${yyy}
+	make();// построение bc
+	let h=tbc.querySelector('t'+cuc); //alert(h.length);
+	//h.style.background='yellow';
+	/*
+	gaf.innerHTML=//
+	'<path fill-rule="evenodd" d="'
+	+bc.map(i=>i[0]['n']+(i[0].x??'')+' '+(i[0].y??'')).join(' ')
+	+'" fill="fuchsia"></path>';
+*/
+	gaf.innerHTML=//
+	'<path fill-rule="evenodd" d="'
+	+bc.map(i=>i[1]['n']
+	+((i[0].hasOwnProperty('b'))?(i[0].b.join(' ')):'')
+	+' '+(i[1].x??'')+' '+(i[1].y??'')).join(' ')
+	+'" fill="purple"></path>';
+
+
+	h1.innerText=[cuc,bc[cuc][0].x,bc[cuc][0].y].join(' ');
+	});// 
+
+</script>   
+</body>
+</html>
