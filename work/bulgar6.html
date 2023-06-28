@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="data:image/gif;base64,R0lGODlhEAAQANUAAP////5B/v4A/v51/v4h/v4L/v4M/v4n/v5i/v6Q/v4K/v7//v4N/v7g/v4O/v6I/v79/v7+/v6u/v7c/v5X/v5C/v4m/v5w/v7w/v4R/v44/v7o/v52/v5u/v7n/v7d/v7f/v78/v46/v7U/v4W/v5A/v6j/v6v/v45/v5F/v4P/v5l/v49/v65/v48/v6P/gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFewAAACwAAAAAEAAQAAAGgUCAcEgUhooJh8DyED5IAsHqAwhEr9isK6p4TC6Za8mUihoEhIVaHfWsF4VzYQGBsAUful0gX0Qid3l/C3wCc3WBeoR9g4R4foCFh3aOeYiFBm+OIG+FBwsSFBiOIQsnagxnAgxXGlEiVyyFVxVZAigqZgMIDUMbHB0jRC0vRcZFQQA7">
+  <link rel="icon" type="image/x-icon" href="data:image/gif;base64,R0lGODlhEAAQAOYAAP///6ZMpn8Af7BisGcAZ24Abt673v8AAHoAenAAcKVGpdGg0WgAaP7+/v39/eLE4mkAaWwAbObH5pAcj28Ab5gomKhQqG0AbXMAc28AbnIAcrVktYYMhpkrmZw2m4wQjK9gr82ZzXUAddOl08iPyMyQzNSi1K1TrerO6mUAZXYAdnEAcVsAW10AXVwAXGIAYmsAa7FbsWIAY8GDwb9+v8N+w8qQyrlrua1QrdCf0GQAZIYAhrl0uXkAed6z3pYqlr1wvXQAdN2z3X0AfXgAeJMfk6M/o6hRqIUGhbhuuHsAe+XH5WoAal4AXtWn1Z49noEDgbx5vAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFewAAACwAAAAAEAAQAAAHtIAAgoOEhYMLExkeIYI5PwQISYIBBAwUGgkMKTI6MAkJMARPAgUFFRsfIioiO0BCRkoFUAIGB7YHIyszt7YUs7YODgckLDQHwcJNvw3MByUtNQfMDQfKAscNwiUu0Q7Z1b/e2tzYyeHf293f1rwHJi827Tq/DxYcICcwNzwUQ0dLsgQggHBBAwYEGhD0CEKkQI8VsxJEwNBBQ4QCEmEUQcIEApQBCiQMQhEDhw9CTqIYWjkoEAA7">
   
   
   <title>svg</title>
@@ -423,25 +423,28 @@ let xxx=382, yyy=39;
 //alert(bc[cuc][0].y);
 	switch(e.key) {//
 		case 'ArrowDown': //↓
-				bc[cuc][0].y++;
-			
+				//bc[cuc][0].y++;
+				bc[cuc][1].y++;
 				yyy++;
 				e.preventDefault();
 				break;		
 		case 'ArrowUp': //↑
-				bc[cuc][0].y--;
+				//bc[cuc][0].y--;
+				bc[cuc][1].y--;
                 yyy--;
 				e.preventDefault();
 				break;
 						  
 		case 'ArrowRight': //→
-				bc[cuc][0].x++;
+				//bc[cuc][0].x++;
+				bc[cuc][1].x++;
 				xxx++;
 				e.preventDefault();
 				break;
 					
 		case 'ArrowLeft': //←
-				bc[cuc][0].x--;
+				//bc[cuc][0].x--;
+				bc[cuc][1].x--;
 				xxx--;
 				e.preventDefault();
 				break;
@@ -464,7 +467,7 @@ let xxx=382, yyy=39;
 	gaf.innerHTML=//
 	'<path fill-rule="evenodd" d="'
 	+bc.map(i=>i[1]['n']+(i[1].x??'')+' '+(i[1].y??'')).join(' ')
-	+'" fill="maroon"></path>';
+	+'" fill="purple"></path>';
 
 
 	h1.innerText=[cuc,bc[cuc][0].x,bc[cuc][0].y].join(' ');
