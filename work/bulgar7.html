@@ -66,11 +66,10 @@ textPath {font-family: sans-serif; font-size: 16px;}
 <!--
 <path fill-rule="evenodd" d="M20 57,v198 l 66 -16, l 64 10,V54 l -62 -15, l -68 18,zm 150 -2.82,v195 l 64 -10, l 66 16,V57 l -68 -18, l -62 15,zM 160 36,L 86 19, l -80 22,L0 50,v220 l 14 9, l 74 -20, l 64 18, l 16 0, l 64 -18, l 74 20,L320 270,v-220 l-6 -9, l -80 -22, L 160 36,z" fill="black"></path> 
 -->
-
+<path fill-rule="evenodd" d="M 50 100 C 50 50  100 50  100 100 Z  " fill="red"></path>
+<path fill-rule="evenodd" d="M 50 100 c 0 -50  50 0  0 50 Z  " fill="gold"></path>
 <g id="gaf">
-<path fill-rule="evenodd" d="M20 57 V 255 A 99 99 0 0 0 86 239 A 99 99 0 0 0 150 255 V 54 L 86 37 L 20 57z    
-M170 51 V255  L 233 239 L 300 257 V 57 L 231 39 L 170 53 z
-M163 37 L 85 18 L 5 44 L 0 50 V 270 L 17 281 L 90 258 L 152 277 L171 277 L 237 258 L 308 277 L 321 271 V 50 L 311 40 L 236 16 L 163 37 z " fill="fuchsia"></path>
+
 </g>
 
 </svg>
@@ -153,40 +152,11 @@ let a=
 {n:'z'}];
 //*******************
 let c=[
-{n:'M', x:20, y:57}, 
-{n:'V', y:255}, //, b:[99, 99, 0, 0, 1],b:[99, 99, 0, 0, 1]
-{n:'C', x:38, y:248},
-{n:'', x:62, y:242},
-{n:'', x:86, y:239},//{n:'L', x:86, y:239}, //A 99 99 0 0 0 86 239 //
-{n:'L', x:150, y:255},//{n:'L', x:150, y:255}, //A 99 99 0 0 0 150 255 //
-{n:'V', y:54}, 
-{n:'L', x:86, y:37}, 
-{n:'L', x:20, y:57},
-{n:'z'},    
-{n:'M', x:170, y:51}, 
-{n:'V', y:255},  
-{n:'L', x:233, y:239}, 
-{n:'L', x:300, y:257}, 
-{n:'V', y:57}, 
-{n:'L', x:231, y:39}, 
-{n:'L', x:170, y:53}, 
-{n:'z'},
-{n:'M', x:163, y:37}, 
-{n:'L', x:85, y:18}, 
-{n:'L', x:5, y:44}, 
-{n:'L', x:0, y:50}, 
-{n:'V', y:270}, 
-{n:'L', x:17, y:281}, 
-{n:'L', x:90, y:258}, 
-{n:'L', x:152, y:277}, 
-{n:'L', x:171, y:277}, 
-{n:'L', x:237, y:258}, 
-{n:'L', x:308, y:277}, 
-{n:'L', x:321, y:271}, 
-{n:'V', y:50}, 
-{n:'L', x:311, y:40}, 
-{n:'L', x:236, y:16}, 
-{n:'L', x:163, y:37}, 
+{n:'M', x:50, y:100}, 
+//{n:'V', y:255}, //, b:[99, 99, 0, 0, 1],b:[99, 99, 0, 0, 1]
+{n:'C', x:50, y:50},
+{n:'', x:100, y:50},
+{n:'', x:100, y:100},//{n:'L', x:86, y:239}, //A 99 99 0 0 0 86 239 //
 {n:'z'}];
 //****************
 let c2=[
@@ -349,7 +319,8 @@ const make=()=>{
 			//x2=+(i.x+beforex).toFixed(2);
 			//y2=+(i.y+beforey).toFixed(2); 
 			turtoxc=turtxc; turtoyc=turtyc;
-			turtxc=i.x+turtxc;turtyc=i.y+turtyc;
+			//turtxc=i.x+turtxc;turtyc=i.y+turtyc;
+			turtxc=i.x-50;turtyc=i.y-100;
 			show2xc=turtxc;show2yc=turtyc;
 			break;
 			case 'C': 
@@ -357,7 +328,7 @@ const make=()=>{
 			turtoxc=turtxc; turtoyc=turtyc;
 			//turtxc=i.x-basexc;turtyc=i.y-baseyc;//+basex+basey
 			//turtxc=basexc-i.x;turtyc=baseyc-i.y;//+basex+basey
-			turtxc=i.x;turtyc=i.y;//+basex+basey
+			turtxc=i.x+turtoxc;turtyc=i.y+turtoyc;//+basex+basey
 			show2xc=turtxc;show2yc=turtyc;
 			//alert('o');
 			break;		
@@ -474,13 +445,13 @@ let xxx=382, yyy=39;
 				e.preventDefault();
 				break;				 
 
-		case '0': if(!curve.checked){bok++;bok=bok%5;
+		case '0': {cuc++;cuc=cuc%4;
 			
 		}// numpad0	, 0	
 		default: break;
 	}// switch//${xxx} ${yyy}
 	make();// построение bc
-	let h=tbc.querySelector('t'+cuc); //alert(h.length);
+	//let h=tbc.querySelector('t'+cuc); //alert(h.length);
 	//h.style.background='yellow';
 	/*
 	gaf.innerHTML=//
@@ -493,7 +464,10 @@ let xxx=382, yyy=39;
 	+bc.map(i=>i[1]['n']
 	+((i[0].hasOwnProperty('b'))?(i[0].b.join(' ')):'')
 	+' '+(i[1].x??'')+' '+(i[1].y??'')).join(' ')
-	+'" fill="purple"></path>';
+	+'" fill="lime"></path>'
+	+'<circle r="3" cx="'+bc[cuc][0].x+'" cy="'+bc[cuc][0].y+'" fill="blue"></circle>'
+	
+	;
 
 
 	h1.innerText=[cuc,bc[cuc][0].x,bc[cuc][0].y].join(' ');
