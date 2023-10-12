@@ -152,15 +152,18 @@ a=[];c=-1;gogo.innerHTML='';
 <label onclick="but10();
 a=[];c=-1;gogo.innerHTML='';
 ">bezie</label>
-<label onclick="a=[];c=-1;gogo.innerHTML='';// стирает путь">clear path</label>
+<label onclick="a=[];c=-1;gogo.innerHTML='';// стирает путь">clear<br>path</label>
+
 <label onclick="grid()">grid</label>
-<label onclick="del()">&times;</label>
+
 
 
 <label onclick="but06()">male</label>
 <label onclick="but07()">female</label>
 <label onclick="but08()">fial</label>
 <label onclick="but09()">runcap</label>
+<label onclick="toBack(move)">toBack</label>
+<label onclick="del()">&times;</label>
 
 
  <article class="palet">
@@ -307,6 +310,7 @@ const brushcolor=(x)=>{
 }
 const strokecolor=(x)=>{
 	let c=colorToRGBA(x.getAttribute('stroke'));
+	if (!c) return '';
 	return `SetPenColor(rgb(${c[0]},${c[1]},${c[2]}));`;
 }
 
@@ -326,7 +330,7 @@ const pas=()=>{// pascalabc.net код
 		d=document.getElementById('p'+i);//(i+1)//
 		if(d){// полигон
 			bc=brushcolor(d);
-			pc=strokecolor(d);
+			//pc=strokecolor(d);
 			s=d.getAttribute('d').replace(/[^\d-,]/g,'').split(',');
 			let a=[];
 			xx=0,yy=0;
@@ -335,7 +339,7 @@ const pas=()=>{// pascalabc.net код
 				yy+=+s[j+1];
 				a.push('('+xx+','+yy+')');
 			}	
-			let e=bc+pc+'Polygon('+a.join(',')+');<br>';
+			let e=bc+/*pc+*/'Polygon('+a.join(',')+');<br>';
 			//let e=bc+'Polyline('+a.join(',')+','+a[0]+');<br>';
 			return e;
 		}
@@ -789,7 +793,7 @@ a10.push(a10[0]);
 			console.log([px,py]);
 		return (k===0)?j:o});	//	
 	let a12=a14.map(v=>(v.x|0)+','+(v.y|0)).join(',');
-	let a13=a12.split(/,/g)[0]+', '+a12.split(/,/g)[1]+', c'+a12.split(/,/g).slice(2).join(',');
+	let a13=a12.split(/,/g)[0]+','+a12.split(/,/g)[1]+', c'+a12.split(/,/g).slice(2).join(',');
 	//alert(a12);
 	//alert(a13);
 	//console.log(a12);
@@ -1034,6 +1038,14 @@ dawn={};for (let key in au[n]){dawn[key] = au[n][key];}
 		}
 	});
 //**************************
+const toBack=()=>{
+	b=document.querySelector('#r'+move)||// квадрат	
+		document.querySelector('#e'+move)||// круг	
+		document.querySelector('#p'+move);// полигон
+//	if (b){figs.append(b)}
+	if (b){figs.prepend(b)}	
+}		
+//**************************
 
 const cpy=x=>{ // копирование в буфер обмена
 	const cop=document.querySelector('#cop');
@@ -1042,6 +1054,7 @@ const cpy=x=>{ // копирование в буфер обмена
 	document.execCommand('copy');
 } 
 //*****************************************************************//
+grid();
 </script>   
 </body>
 </html>
